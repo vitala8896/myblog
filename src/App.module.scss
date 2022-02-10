@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap');
+@import "~bootstrap/scss/bootstrap";
+
+.App {
+  font-family: 'Montserrat', sans-serif;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  height: 100px;
+  width: 100%;
+  align-items: center;
+  background: rgb(49, 49, 49);
+  border-bottom: 1px solid rgb(219, 219, 219);
+  a {
+    padding-right: 20px;
+    text-decoration: none;
+  }
+}
+.body {
+  display: flex
+}
+.auth {
+  color: red;
+}
+ 

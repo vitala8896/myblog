@@ -1,0 +1,42 @@
+.header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  background: #313131;
+  width: 100%;
+  height: 67px;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%
+}
+.appLogo {
+  height: 70px;
+  z-index: 100 !important;
+}
+.avatar {
+  width: 70px;
+  right: 10px;
+  border-radius: 50%;
+  padding-right: 10px;
+}
+.menu {
+  display: flex;
+  padding-top: 15px;
+  a {
+    font-size: 22px;
+   text-decoration: none;
+  }
+  :nth-child(1){
+     margin-right: 20px;
+   }
+}
+@media (max-width: 1250px){
+  .container {
+    width: 100%
+  }
+}

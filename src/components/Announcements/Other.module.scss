@@ -1,0 +1,39 @@
+.otherWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 70%;
+}
+.otherAnnouncements {  
+  margin-top: 20px;
+  width: 49%;
+  padding: 20px;
+  height: 120px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%); 
+}
+.otherAnnouncements:hover {
+  box-shadow: 1px 1px 20px  #6d6d6d;
+  color: white;
+}
+.name {
+  color: white;
+  margin: 0;
+}
+@media (max-width: 1250px){
+  .otherWrapper {
+    width: 95%
+  }
+}
+@media (max-width: 768px) {
+  .otherWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .otherAnnouncements {  
+    width: 100%;    
+  }
+}
