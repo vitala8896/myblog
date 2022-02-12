@@ -1,5 +1,5 @@
 import { PAGE_NUM, PAGE_SIZE, PAGE_COUNT, GET_AVATAR,SET_LIST } from './actionTypes'
-import axios from './../../axios/axios-post'
+import axios from '../../axios/axios-post'
 import { setDataPosts } from './post'
 
 export function rerenderNumPage() {

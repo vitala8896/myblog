@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import classes from './Other.module.scss'
+import classes from './../../Assets/Styles/Posts/Other.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { setActivePost } from '../../store/actions/post'
+import { setActivePost } from '../../Services/actions/post'
 
 const OtherPosts = () => {
   const dispatch = useDispatch()

@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Announcements.module.scss'
+import classes from './../../Assets/Styles/Announcements/Announcements.module.scss'
 import axios from '../../axios/axios-post'
-import person from './../UI/img/person.svg'
+import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
-import { setDataAnnouncements, setActiveAnnouncement, fetchPostsStart } from '../../store/actions/post'
+import { setDataAnnouncements, setActiveAnnouncement, fetchPostsStart } from '../../Services/actions/post'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
-import { getDataUsers } from './../../store/actions/post'
-import Footer from './../Footer/Footer'
+import { getDataUsers } from './../../Services/actions/post'
+import Footer from '../../Layouts/Footer/Footer'
 
 const Announcements = () => {
   const dispatch = useDispatch()

@@ -1,9 +1,8 @@
-import classes from './Header.module.scss'
+import classes from './../../Assets/Styles/Other/Header.module.scss'
 import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setPageNum } from './../../store/actions/page'
-import logo from './../UI/img/blog-logo.png'
-import { getList } from './../../store/actions/post'
+import { setPageNum } from '../../Services/actions/page'
+import logo from './../../Assets/Images/blog-logo.png'
 
 const Header = () => {
   const dispatch = useDispatch()

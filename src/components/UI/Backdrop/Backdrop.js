@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './Backdrop.module.scss'
+import classes from './../../../Assets/Styles/Other/Backdrop.module.scss'
 
 const Backdrop = props => <div className={classes.Backdrop} onClick={props.onClick} />
 

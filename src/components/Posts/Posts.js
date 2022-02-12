@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Posts.module.scss'
-import { setList } from '../../store/actions/page'
-import { setActivePost, fetchPostsStart, setDataUsers, setDataComments } from '../../store/actions/post'
-import person from './../UI/img/person.svg'
+import classes from './../../Assets/Styles/Posts/Posts.module.scss'
+import { setList } from '../../Services/actions/page'
+import { setActivePost, fetchPostsStart, setDataUsers, setDataComments } from '../../Services/actions/post'
+import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
@@ -33,7 +33,7 @@ const Posts = () => {
               <p>{getDate(item.create)}</p>
             </div>
             <p className={classes.title}>{item.title}</p>
-            <p className={classes.body}>{item.body.substr(0, 600)}</p>
+            <p className={classes.body}>{item.body.substr(0, 230)+'...'}</p>
           </NavLink>
         </div>
       )

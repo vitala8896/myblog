@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Edit.module.scss'
+import classes from './../../Assets/Styles/Posts/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setOtherPosts, setComments } from "../../store/actions/post"
+import { setOtherPosts, setComments } from "../../Services/actions/post"
 import axios from '../../axios/axios-post'
-import { setPageNum } from '../../store/actions/page'
-import { createPost, finishDeletePost, finishUpdatePost } from './../../store/actions/create';
+import { setPageNum } from '../../Services/actions/page'
+import { createPost, finishDeletePost, finishUpdatePost } from './../../Services/actions/create'
 
 const Edit = () => {
   const dispatch = useDispatch()

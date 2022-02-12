@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import classes from './Auth.module.scss'
+import classes from './../Assets/Styles/Other/Auth.module.scss'
 import { connect } from 'react-redux'
-import Button from './../../../components/UI/Button/Button'
-import Input from './../../../components/UI/Input/Input'
-import { authLogin, authRegister } from './../../../store/actions/auth'
+import Button from '../components/UI/Button/Button'
+import Input from '../components/UI/Input/Input'
+import { authLogin, authRegister } from '../Services/actions/auth'
 
 const validateEmail = email => {
   return String(email).toLowerCase().match(

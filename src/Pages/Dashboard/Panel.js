@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import classes from './Panel.module.scss'
+import classes from './../../Assets/Styles/Other/Panel.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPageNum, setPageCount } from './../../store/actions/page'
-import { setDataPosts } from '../../store/actions/post'
-import axios from './../../axios/axios-post'
+import { setPageNum, setPageCount } from '../../Services/actions/page'
+import { setDataPosts } from '../../Services/actions/post'
+import axios from '../../axios/axios-post'
 
 const Panel = () => {
   const dispatch = useDispatch()

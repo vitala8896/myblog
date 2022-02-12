@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Active.module.scss'
+import classes from './../../Assets/Styles/Posts/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setOtherPosts, setComments, setDataPosts, setDataUsers } from "../../store/actions/post"
+import { setOtherPosts, setComments, setDataPosts, setDataUsers } from "../../Services/actions/post"
 import OtherPosts from './Other'
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
-import { setPageNum } from '../../store/actions/page'
-import { finishDeletePost } from './../../store/actions/create'
+import { setPageNum } from '../../Services/actions/page'
+import { finishDeletePost } from './../../Services/actions/create'
 
 const ActivePost = () => {
   const dispatch = useDispatch()

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Edit.module.scss'
+import classes from './../../Assets/Styles/Announcements/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setPageNum } from '../../store/actions/page'
-import { createAnnouncement, finishUpdateAnnouncement } from './../../store/actions/create'
+import { setPageNum } from '../../Services/actions/page'
+import { createAnnouncement, finishUpdateAnnouncement } from './../../Services/actions/create'
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()

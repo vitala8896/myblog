@@ -1,6 +1,6 @@
-import Posts from '../../Posts/Posts'
-import Panel from './../../Panel/Panel'
-import Footer from './../../Footer/Footer'
+import Posts from '../components/Posts/Posts'
+import Panel from './Dashboard/Panel'
+import Footer from '../Layouts/Footer/Footer'
 
 const Home = () => {
     return (

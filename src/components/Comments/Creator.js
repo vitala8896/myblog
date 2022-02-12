@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import classes from './Creator.module.scss'
-import person from './../UI/img/person.svg'
+import classes from './../../Assets/Styles/Comments/Creator.module.scss'
+import person from './../../Assets/Images/person.svg'
 import { useSelector, useDispatch } from 'react-redux'
-import { createComment, finishCreateComment } from './../../store/actions/create'
+import { createComment, finishCreateComment } from './../../Services/actions/create'
 
 const CommentCreator = () => {
   const dispatch = useDispatch()

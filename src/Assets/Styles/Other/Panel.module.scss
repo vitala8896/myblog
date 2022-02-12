@@ -1,12 +1,13 @@
 .panel {
   display: flex;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   width: 100%;
   align-items: center;
   margin-top: 62px;
   height: 45px;
   cursor: pointer;
+  z-index: 1;
   span {
     padding: 0 10px 0;
   }
@@ -17,7 +18,7 @@
   width: 68%
 }
 .pagination {
-  background: linear-gradient(270deg, #ccff9d 0%, #43c4ff 100%);
+  background: white;
   padding: 3px;
   border-radius: 5px;
   width: auto
@@ -25,8 +26,7 @@
 .selectedPage {
   font-weight: bold;
   font-size: 20px;
-  background: #2884f6;
-  border-radius: 50%;  
+  background: #ececec; 
 }
 @media (max-width: 1250px){
   .container {

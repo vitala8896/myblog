@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
-import classes from './Comments.module.scss'
+import classes from './../../Assets/Styles/Comments/Comments.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import person from './../UI/img/person.svg'
+import person from './../../Assets/Images/person.svg'
 import CommentCreator from './Creator'
-import { finishDeleteComment } from '../../store/actions/create'
-import { setDataComments } from '../../store/actions/post'
-import axios from './../../axios/axios-post'
+import { finishDeleteComment } from '../../Services/actions/create'
 
 const Comments = () => {
   const dispatch = useDispatch()

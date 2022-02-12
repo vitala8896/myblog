@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import classes from './Creator.module.scss'
+import classes from './../../Assets/Styles/Posts/Creator.module.scss'
 import { createControl, validate, validateForm } from '../UI/form/formFramework'
 import { connect } from 'react-redux'
-import { createPost, finishCreatePost } from '../../store/actions/create'
+import { createPost, finishCreatePost } from '../../Services/actions/create'
 import Button from '../UI/Button/Button'
 import Input from '../UI/Input/Input'
 import Textarea from '../UI/Textarea/Textarea'
-import Auxiliary from '../Page/hoc/Auxiliary/Auxiliary'
+import Auxiliary from '../../Pages/Auxiliary'
 
 
 function createFormControl() {

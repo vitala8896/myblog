@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './Active.module.scss'
+import classes from './../../Assets/Styles/Announcements/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setOtherAnnouncements } from '../../store/actions/post'
+import { setOtherAnnouncements } from '../../Services/actions/post'
 import OtherAnnouncements from './Other'
-import { finishDeleteAnnouncement } from '../../store/actions/create'
+import { finishDeleteAnnouncement } from '../../Services/actions/create'
 
 const ActiveAnnouncement = () => {
   const dispatch = useDispatch()

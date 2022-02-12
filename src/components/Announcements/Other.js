@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import classes from './Other.module.scss'
+import classes from './../../Assets/Styles/Announcements/Other.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { setActiveAnnouncement } from '../../store/actions/post'
+import { setActiveAnnouncement } from '../../Services/actions/post'
 
 const OtherAnnouncements = () => {
   const dispatch = useDispatch()
