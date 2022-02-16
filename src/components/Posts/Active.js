@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setOtherPosts, setComments, setDataPosts, setDataUsers } from "../../Services/actions/post"
+import { setOtherPosts, setComments } from "../../Services/actions/post"
 import OtherPosts from './Other'
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
@@ -12,24 +12,13 @@ import { finishDeletePost } from './../../Services/actions/create'
 const ActivePost = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { index, posts, users, activePost, pageSize } =
+  const { index, posts, users, activePost } =
   useSelector(state => ({
     index: state.post.activePost - 1,
     posts: state.post.posts,
     users: state.post.users,
-    activePost: state.post.activePost,
-    pageSize: state.page.pageSize
+    activePost: state.post.activePost
   }))
-  
-  const getData = async () => {
-    await axios.get('/posts').then(response => {
-      dispatch(setDataPosts(response.data))
-    })
-    await axios.get('/users').then(response => { 
-      const users = response.data
-      dispatch(setDataUsers(users))
-    })
-  }
   const getOtherPosts = () => {
     let arr = []
     posts.forEach((item, key) => {

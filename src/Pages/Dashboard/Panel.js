@@ -2,25 +2,32 @@ import { useEffect } from 'react'
 import classes from './../../Assets/Styles/Other/Panel.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPageNum, setPageCount } from '../../Services/actions/page'
-import { setDataPosts } from '../../Services/actions/post'
+import { setDataPosts, setDataUsers, setDataAnnouncements } from '../../Services/actions/post'
 import axios from '../../axios/axios-post'
 
 const Panel = () => {
   const dispatch = useDispatch()
-  const { pageNum, pageSize, pageCount, state } = useSelector(state => ({
+  const { pageNum, pageSize, pageCount, posts, users, announcements } = useSelector(state => ({
     pageNum: state.page.pageNum,
     pageSize: state.page.pageSize,
     pageCount: state.page.pageCount,
-    state
+    posts: state.post.posts,
+    users: state.post.users,
+    announcements: state.post.announcements
   })
   )
-  useEffect(() => {
-    axios.get('/posts').then(response => {
+  useEffect(() => {  
+    users.length === 0 &&
+    axios.get('/users').then(response => {
+      dispatch(setDataUsers(response.data))
+    })
+    posts.length === 0 &&
+    axios.get('/posts').then(response => {      
       dispatch(setDataPosts(response.data))
       const pageCount = Math.ceil(response.data.length / pageSize)
       dispatch(setPageCount(pageCount))
-    })
-  }, [pageNum])
+    })     
+  }, [])
   let pages = []
   for (let i = 1; i <= pageCount; i++) {
     pages.push(i)

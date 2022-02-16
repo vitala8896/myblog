@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-post'
-import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS,  SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT,
+import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT,
   SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
 
 export function fetchPostById(postId) {
@@ -46,9 +46,9 @@ export function fetchPostsError(e) {
 export function getDataPosts() {
   return async dispatch => {
     try {
-      const response = await axios.get('/posts')
-      const posts = response.data
-      dispatch(setDataPosts(posts))
+      await axios.get('/posts').then(response => {
+        dispatch(setDataPosts(response.data))
+      })
     } catch (e) {
       console.log(e)
     }

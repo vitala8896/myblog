@@ -2,21 +2,45 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Posts.module.scss'
 import { setList } from '../../Services/actions/page'
-import { setActivePost, fetchPostsStart, setDataUsers, setDataComments } from '../../Services/actions/post'
+import { setActivePost, fetchPostsStart } from '../../Services/actions/post'
 import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
-import axios from './../../axios/axios-post'
 
 const Posts = () => {
   const dispatch = useDispatch()
-  const { list, loading, pageNum, pageSize } = useSelector(state => ({
+  const { list, loading, pageNum, pageSize, posts, users } = useSelector(state => ({
     list: state.post.list,
     loading: state.post.loading,
     pageNum: state.page.pageNum,
-    pageSize: state.page.pageSize
-  }))
+    pageSize: state.page.pageSize,
+    posts: state.post.posts,
+    users: state.post.users
+
+  }))  
+  useEffect(() => {
+    createList()
+    renderList()
+  }, [posts, users, pageNum])
+  const createList = async () => {
+    dispatch(fetchPostsStart())
+      let arrList = [] 
+      let start = (pageNum*pageSize)-pageSize 
+      let end = pageNum*pageSize 
+      posts.slice(start,end).forEach((item,key) => {
+        let userId = posts[start+key].userId - 1
+        arrList.push({
+          id: item.id,
+          name: users[userId].firstname,
+          surname: users[userId].lastname,
+          title: item.title,
+          body: item.body,
+          create: item.createdAt
+        })
+      })           
+      dispatch(setList(arrList))
+  }
   const renderList = () => {
     return list.map((item, key) => {
       let keyItem = ((pageNum*pageSize)-pageSize+key+1)
@@ -38,37 +62,6 @@ const Posts = () => {
         </div>
       )
     })
-  }
-  useEffect(() => {
-    createList()
-    renderList()
-  }, [pageNum])
-  const createList = async () => {
-    dispatch(fetchPostsStart()) 
-    try {
-      const responseUsers = await axios.get('/users')
-      const responsePost = await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}`)
-      await axios.get('/comments').then(response => {
-        dispatch(setDataComments(response.data))
-      })
-      let arrList = []
-      Object.keys(responsePost.data).forEach(key => {
-        let item = responsePost.data[key]
-        let userId = responsePost.data[key].userId - 1
-        arrList.push({
-          id: item.id,
-          name: responseUsers.data[userId].firstname,
-          surname: responseUsers.data[userId].lastname,
-          title: item.title,
-          body: item.body,
-          create: item.createdAt
-        })
-      })
-      dispatch(setDataUsers(responseUsers.data))
-      dispatch(setList(arrList))
-    } catch (e) {
-      console.log(e)
-    }
   }
   return (
     <div>

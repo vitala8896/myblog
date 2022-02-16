@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom'
 import { setDataAnnouncements, setActiveAnnouncement, fetchPostsStart } from '../../Services/actions/post'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
-import { getDataUsers } from './../../Services/actions/post'
 import Footer from '../../Layouts/Footer/Footer'
 
 const Announcements = () => {
@@ -22,13 +21,12 @@ const Announcements = () => {
     renderList()
   }, [])
   const createList = async () => {
-    dispatch(fetchPostsStart())   
-    dispatch(getDataUsers())
+    dispatch(fetchPostsStart())  
     try {
       const response = await axios.get('/announcements')
+      
       let arrList = []
-      Object.keys(response.data).forEach(key => {
-        let item = response.data[key]
+      response.data.forEach((item, key) => {
         let userId = response.data[key].userId - 1
         arrList.push({
           id: item.id,

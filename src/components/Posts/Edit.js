@@ -18,7 +18,6 @@ const Edit = () => {
       users: state.post.users,
       activePost: state.post.activePost
     }))
-  console.log(activePost)
   const [title, setTitle] = useState(posts[index].title)
   const [body, setBody] = useState(posts[index].body)
   const getOtherPosts = () => {
@@ -89,7 +88,7 @@ const Edit = () => {
           {isAuth() &&
             <span className="material-icons" onClick={() => {
             getItem()
-            dispatch(finishUpdatePost(activePost))
+            dispatch(finishUpdatePost(posts[index].id))
             dispatch(setPageNum(1))
             history.push('/')
             }}>done_all</span>

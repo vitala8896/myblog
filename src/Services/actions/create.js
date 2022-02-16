@@ -1,6 +1,6 @@
 import axios from '../../axios/axios-post'
 import { CREATE_POST, CREATE_COMMENT, RESET_POST_CREATION, RESET_COMMENT_CREATION, CREATE_ANNOUNCEMENT, RESET_ANNOUNCEMENT_CREATION, DELETE_POST, RESET_POST_DELETE, RESET_COMMENT_DELETE } from './actionTypes'
-import { setDataPosts, setDataAnnouncements, setDataComments, setComments } from './post'
+import { setDataPosts, setDataAnnouncements, setDataComments, setComments, getDataPosts } from './post'
 import { setPageCount } from './page'
 
 export function createPost(item) {
@@ -55,6 +55,7 @@ export function finishCreatePost() {
   return async (dispatch, getState) => {
     await axios.post('/posts', getState().create.post)
     dispatch(resetPostCreation())
+    dispatch(getDataPosts())
   }
 }
 export function finishCreateAnnouncement() {
@@ -68,6 +69,7 @@ export function finishUpdatePost(id) {
     try {
       await axios.patch(`/posts/` + id, getState().create.post)
       dispatch(resetPostCreation())
+      dispatch(getDataPosts())
     } catch (e) {
       console.log(e)
     }

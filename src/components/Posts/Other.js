@@ -6,17 +6,16 @@ import { setActivePost } from '../../Services/actions/post'
 
 const OtherPosts = () => {
   const dispatch = useDispatch()
-  const { index, posts, users, otherPosts, activePost } =
+  const { index, posts, users, otherPosts } =
     useSelector(state => ({
       index: state.post.activePost - 1,
       posts: state.post.posts,
       users: state.post.users,
-      otherPosts: state.post.otherPosts,
-      activePost: state.post.activePost
+      otherPosts: state.post.otherPosts
     }))
   useEffect(() => {
     renderOtherPosts()
-  }, [activePost])
+  })
   const renderOtherPosts = () => {
     return otherPosts.map(item => {
       return <NavLink to={'/posts/' + item.key} onClick={() => {

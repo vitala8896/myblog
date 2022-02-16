@@ -6,6 +6,6 @@ const getDate = updatedAt => {
   const months = [
     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   let res = `${day} ${months[month]} ${year}`
-  return res === 'NaN undefined NaN'? '. . .': res
+  return res === 'NaN undefined NaN'? ' . . . ': res
 }
 export default getDate
