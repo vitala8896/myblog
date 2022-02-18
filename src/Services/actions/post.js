@@ -1,6 +1,6 @@
 import axios from '../../axios/axios-post'
-import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT,
-  SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
+import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
+import { setPageCount } from './page'
 
 export function fetchPostById(postId) {
   return async dispatch => {
@@ -47,8 +47,10 @@ export function getDataPosts() {
   return async dispatch => {
     try {
       await axios.get('/posts').then(response => {
-        dispatch(setDataPosts(response.data))
-      })
+        dispatch(setDataPosts(response.data.reverse()))
+        const pageCount = Math.ceil(response.data.length / 20)
+        dispatch(setPageCount(pageCount))
+      })      
     } catch (e) {
       console.log(e)
     }

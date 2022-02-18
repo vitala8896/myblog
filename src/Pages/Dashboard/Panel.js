@@ -23,7 +23,7 @@ const Panel = () => {
     })
     posts.length === 0 &&
     axios.get('/posts').then(response => {      
-      dispatch(setDataPosts(response.data))
+      dispatch(setDataPosts(response.data.reverse()))
       const pageCount = Math.ceil(response.data.length / pageSize)
       dispatch(setPageCount(pageCount))
     })     

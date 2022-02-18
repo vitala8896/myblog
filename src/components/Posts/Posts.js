@@ -17,7 +17,6 @@ const Posts = () => {
     pageSize: state.page.pageSize,
     posts: state.post.posts,
     users: state.post.users
-
   }))  
   useEffect(() => {
     createList()
@@ -25,15 +24,16 @@ const Posts = () => {
   }, [posts, users, pageNum])
   const createList = async () => {
     dispatch(fetchPostsStart())
-      let arrList = [] 
+      let arrList = []       
       let start = (pageNum*pageSize)-pageSize 
-      let end = pageNum*pageSize 
+      let end = pageNum*pageSize>posts.length? posts.length: pageNum*pageSize  
       posts.slice(start,end).forEach((item,key) => {
         let userId = posts[start+key].userId - 1
         arrList.push({
           id: item.id,
           name: users[userId].firstname,
           surname: users[userId].lastname,
+          avatar: users[userId].avatar,
           title: item.title,
           body: item.body,
           create: item.createdAt
@@ -51,7 +51,9 @@ const Posts = () => {
           }} className={classes.link}>
             <div className={classes.item__header} >
               <div className={classes.imgAndName}>
-                <img src={person} alt='' />
+                <div className={classes.img}>
+                  <img src={item.avatar? item.avatar:person} alt='' /> 
+                </div>                           
                 <p className={classes.name}>{item.name} {item.surname}</p>
               </div>
               <p>{getDate(item.create)}</p>

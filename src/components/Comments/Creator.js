@@ -31,7 +31,7 @@ const CommentCreator = () => {
       {localStorage.getItem('userId') &&
         <div className={classes.Creator}>
           <div className={classes.header}>
-            <img src={person} alt='' />
+            <img src={ userId() ? users[userId()].avatar : person} alt='' />
             <p>{users[userId()].firstname} {users[userId()].lastname + ' - '}</p>
           </div>
           <input

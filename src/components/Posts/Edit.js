@@ -8,8 +8,7 @@ import { setPageNum } from '../../Services/actions/page'
 import { createPost, finishDeletePost, finishUpdatePost } from './../../Services/actions/create'
 
 const Edit = () => {
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch()  
   let history = useHistory()
   const { index, posts, users, activePost } =
     useSelector((state) => ({
@@ -89,7 +88,6 @@ const Edit = () => {
             <span className="material-icons" onClick={() => {
             getItem()
             dispatch(finishUpdatePost(posts[index].id))
-            dispatch(setPageNum(1))
             history.push('/')
             }}>done_all</span>
           }

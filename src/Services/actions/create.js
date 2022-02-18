@@ -104,7 +104,7 @@ export function finishDeletePost(id) {
     await axios.delete('/posts/' + id)
     dispatch(resetPostDelete())
     await axios.get('/posts').then(response => {
-      dispatch(setDataPosts(response.data))
+      dispatch(setDataPosts(response.data.reverse()))
       const pageCount = Math.ceil(response.data.length / 20)
       dispatch(setPageCount(pageCount))
     })
