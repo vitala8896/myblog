@@ -7,18 +7,21 @@ import { createAnnouncement, finishUpdateAnnouncement } from './../../Services/a
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
-  
+
   let history = useHistory()
-  const { index, users, announcements } =
+  const { users, announcements, activeAnnouncement } =
     useSelector(state => ({
-      index: state.post.activeAnnouncement - 1,
       announcements: state.post.announcements,
+      activeAnnouncement: state.post.activeAnnouncement,
       users: state.post.users
     }))
-  const [title, setTitle] = useState(announcements[index].title)
-  const [body, setBody] = useState(announcements[index].body)
+  const getIndex = () => {
+    return announcements.length - activeAnnouncement
+  }
+  const [title, setTitle] = useState(announcements[getIndex()].title)
+  const [body, setBody] = useState(announcements[getIndex()].body)
   const isAuth = () => {
-    return users[announcements[index].userId - 1].id === +localStorage.getItem('userId')
+    return users[announcements[getIndex()].userId - 1].id === +localStorage.getItem('userId')
   }
   const titleHandle = e => {
     let val = e.target.value
@@ -44,18 +47,18 @@ const EditAnnouncement = () => {
           <NavLink to={'/'} onClick={() => {
             dispatch(setPageNum(1))
           }} className={classes.link}>
-            <p className={classes.name}>{users[announcements[index].userId - 1].firstname} {users[announcements[index].userId - 1].lastname}</p>
+            <p className={classes.name}>{users[announcements[getIndex()].userId - 1].firstname} {users[announcements[getIndex()].userId - 1].lastname}</p>
           </NavLink>
           {isAuth() &&
             <span className="material-icons" onClick={() => {
-            getItem()
-            dispatch(finishUpdateAnnouncement(announcements[index].id))
-            history.push('/')
+              getItem()
+              dispatch(finishUpdateAnnouncement(announcements[getIndex()].id))
+              history.push('/announcements')
             }}>done_all</span>
           }
         </div>
-        <h1><input value={title} onChange={e => { titleHandle(e) }}/></h1>
-        <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }}/>
+        <h1><input value={title} onChange={e => { titleHandle(e) }} /></h1>
+        <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }} />
       </div>
     </div>
   )

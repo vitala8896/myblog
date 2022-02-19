@@ -37,9 +37,9 @@
 .item__header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   .date{
-    padding-top: 10px;
+    padding-top: 6px;
     font-size: 12px;
   }
   .img {
@@ -101,5 +101,10 @@
   .item {
     width: 90%;
     height: 220px;
+  }
+}
+@media(max-width: 450px){
+  .list {
+    margin: 100px 0 15px;
   }
 }

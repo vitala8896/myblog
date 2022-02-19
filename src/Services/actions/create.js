@@ -77,7 +77,6 @@ export function finishUpdatePost(id) {
   }
 }
 export function finishUpdateAnnouncement(id) {
-  console.log(id)
   return async (dispatch, getState) => {
     try {
       await axios.patch(`/announcements/` + id, getState().create.announcement)

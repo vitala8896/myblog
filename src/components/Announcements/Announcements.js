@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom'
 import { setDataAnnouncements, setActiveAnnouncement, fetchPostsStart } from '../../Services/actions/post'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
-import Footer from '../../Layouts/Footer/Footer'
 
 const Announcements = () => {
   const dispatch = useDispatch()
@@ -15,18 +14,18 @@ const Announcements = () => {
     announcements: state.post.announcements,
     users: state.post.users,
     loading: state.post.loading
-  }))  
+  }))
   useEffect(() => {
     createList()
     renderList()
   }, [])
   const createList = async () => {
-    dispatch(fetchPostsStart())  
+    dispatch(fetchPostsStart())
     try {
-      const response = await axios.get('/announcements')
+      const respAnno = await axios.get('/announcements')
       let arrList = []
-      response.data.forEach((item, key) => {
-        let userId = response.data[key].userId - 1
+      respAnno.data.reverse().forEach((item, key) => {
+        let userId = respAnno.data[key].userId - 1
         arrList.push({
           id: item.id,
           name: users[userId].firstname,
@@ -35,7 +34,7 @@ const Announcements = () => {
           title: item.title,
           body: item.body,
           create: item.createdAt,
-          key: +key
+          key: respAnno.data.length - key - 1
         })
       })
       dispatch(setDataAnnouncements(arrList))
@@ -47,8 +46,8 @@ const Announcements = () => {
     return announcements.map((item, key) => {
       return (
         <div className={classes.item} key={key}>
-          <NavLink to={'/announcements/' + (+item.key+1)} onClick={() => {
-            dispatch(setActiveAnnouncement(+item.key+1))
+          <NavLink to={'/announcements/' + (+item.key + 1)} onClick={() => {
+            dispatch(setActiveAnnouncement(+item.key + 1))
           }} className={classes.link}>
             <div className={classes.item__header} >
               <div className={classes.imgAndName}>
@@ -70,9 +69,8 @@ const Announcements = () => {
     <div className={classes.Announcements}>
       <h1>Announcements</h1>
       <div className={classes.container}>
-        {loading ? <Loader /> : renderList()}
+        {loading ?<Loader /> : renderList()}
       </div>
-      <Footer />
     </div>
   )
 }

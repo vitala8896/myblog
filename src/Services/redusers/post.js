@@ -35,7 +35,7 @@ export default function postReducer(state = initialState, action) {
       }
     case SET_DATA_POSTS:
       return {
-        ...state, posts: action.posts
+        ...state, posts: action.posts, loading: false
       }
     case SET_DATA_COMMENTS:
       return {

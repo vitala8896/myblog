@@ -34,10 +34,26 @@
   }
   :nth-child(1){
      margin-right: 20px;
-   }
+  }
 }
 @media (max-width: 1250px){
   .container {
     width: 100%
+  }
+}
+@media (max-width: 450px){
+  .appLogo {
+    height: 50px;
+  }
+  .menu {
+    a {
+      font-size: 18px;
+    }
+    :nth-child(1){
+      margin-right: 8px;
+    }
+  }
+  .avatar {
+    width: 50px;
   }
 }
