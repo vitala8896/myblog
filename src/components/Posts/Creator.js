@@ -13,7 +13,11 @@ function createFormControl() {
   return {
     postName: createControl({
       label: 'Post title',
-      errorMessage: 'The field cannot be empty'
+      errorMessage: 'The field cannot be empty',
+      validation: {
+        required: true,
+        minLength: 6
+      }
     }, { required: true }),
     description: createOptionControl(1)
   }
@@ -22,16 +26,33 @@ function createOptionControl(number) {
   return createControl({
     label: 'Description',
     errorMessage: 'The field cannot be empty',
-    id: number
+    id: number,
+    validation: {
+      required: true,
+      minLength: 6
+    }
   }, { required: true })
 }
 class PostCreator extends Component {
   state = {
     isFormValid: false,
     formControls: createFormControl()
-  }
+  }  
   submitHandler = event => {
     event.preventDefault()
+  }
+  validateControl = (value, validation) => {
+    if (!validation) {
+      return true
+    }
+    let isValid = true
+    if (validation.required) {
+      isValid = value.trim() !== '' && isValid
+    }
+    if (validation.minLength) {
+      isValid = value.length >= validation.minLength && isValid
+    }
+    return isValid
   }
   createPostHandler = event => {
     event.preventDefault()
@@ -98,7 +119,7 @@ class PostCreator extends Component {
           <h1>Create a post</h1>
           <form onSubmit={this.submitHandler} className={classes.form}>
             {this.renderControls()}
-            <Button type="success" onClick={this.createPostHandler} disabled={this.props.post.length === 0}>Create a post</Button>
+            <Button type="success" onClick={this.createPostHandler} disabled={!this.state.isFormValid}>Create a post</Button>
         </form>
       </div>
     )

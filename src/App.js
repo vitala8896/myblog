@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import { Route, Switch, Redirect, withRouter
 } from 'react-router-dom'
 import './../src/Assets/Styles/App.module.scss'
 import Home from './Pages/Home'
 import Layout from './Pages/Layout'
-import { connect } from 'react-redux'
 import Logout from './components/Logout/Logout'
 import { autoLogin } from './Services/actions/auth'
 import Header from './Layouts/Header/Header'
@@ -18,11 +18,15 @@ import AnnouncementCreator from './components/Announcements/Creator'
 import EditAnnouncement from './components/Announcements/Edit'
 
 
-class App extends Component {
-  componentDidMount() {
-    this.props.autoLogin()
-  }
-  render() {
+const App = () => {
+  const dispatch = useDispatch()
+  const { isAuthenticated } = useSelector(state => ({
+    isAuthenticated: !!state.auth.token
+  }))  
+  useEffect(() => {
+    autoLogin()
+    dispatch(autoLogin())
+  }, [])
     let routes = (
       <Switch>
         <Route path="/posts/:postId" component={ActivePost} />
@@ -33,7 +37,7 @@ class App extends Component {
         <Redirect to="/" />
       </Switch>
     )
-    if (this.props.isAuthenticated) {
+    if (isAuthenticated) {
       routes = (
         <Switch>
           <Route path="/post-creator" component={PostCreator} />
@@ -55,17 +59,5 @@ class App extends Component {
         {routes}
       </Layout>
     )
-  }
 }
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: !!state.auth.token,
-    state
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    autoLogin: () => dispatch(autoLogin())
-  }
-}
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default withRouter(App)

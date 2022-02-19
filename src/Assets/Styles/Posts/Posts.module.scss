@@ -37,7 +37,11 @@
 .item__header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
+  .date{
+    padding-top: 10px;
+    font-size: 12px;
+  }
   .img {
     display: flex;
     align-items: center;

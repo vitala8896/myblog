@@ -17,8 +17,11 @@ const Edit = () => {
       users: state.post.users,
       activePost: state.post.activePost
     }))
-  const [title, setTitle] = useState(posts[index].title)
-  const [body, setBody] = useState(posts[index].body)
+  const getIndex = () => {
+    return (posts.length - activePost)
+  } 
+  const [title, setTitle] = useState(posts[getIndex()].title)
+  const [body, setBody] = useState(posts[getIndex()].body)  
   const getOtherPosts = () => {
     let arr = []
     posts.forEach((item, key) => {
@@ -31,13 +34,13 @@ const Edit = () => {
         updatedAt: item.updatedAt,
         key: key + 1
       }
-      if (item.userId === posts[activePost - 1].userId && key + 1 !== activePost) {
+      if (item.userId === posts[getIndex()].userId && key + 1 !== activePost) {
         arr.push(itemThis)
       }
     })
     dispatch(setOtherPosts(arr))
     getActiveComments()
-  }
+  }  
   const getActiveComments = async () => {
     try {
       const comments = await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`)
@@ -48,12 +51,12 @@ const Edit = () => {
     }
   }
   const isOtherPosts = () => {
-    dispatch(finishDeletePost(posts[index].id))
+    dispatch(finishDeletePost(posts[getIndex()].id))
     dispatch(setPageNum(1))
     return history.push('/')
   }
   const isAuth = () => {
-    return users[posts[index].userId - 1].id === +localStorage.getItem('userId')
+    return users[posts[getIndex()].userId - 1].id === +localStorage.getItem('userId')
   }
   const titleHandle = e => {
     let val = e.target.value
@@ -82,12 +85,12 @@ const Edit = () => {
           <NavLink to={'/'} onClick={() => {
             dispatch(setPageNum(1))
           }} className={classes.link}>
-            <p className={classes.name}>{users[posts[index].userId - 1].firstname} {users[posts[index].userId - 1].lastname}</p>
+            <p className={classes.name}>{users[posts[getIndex()].userId - 1].firstname} {users[posts[getIndex()].userId - 1].lastname}</p>
           </NavLink>
           {isAuth() &&
             <span className="material-icons" onClick={() => {
             getItem()
-            dispatch(finishUpdatePost(posts[index].id))
+            dispatch(finishUpdatePost(posts[getIndex()].id))
             history.push('/')
             }}>done_all</span>
           }

@@ -24,7 +24,6 @@ const Announcements = () => {
     dispatch(fetchPostsStart())  
     try {
       const response = await axios.get('/announcements')
-      
       let arrList = []
       response.data.forEach((item, key) => {
         let userId = response.data[key].userId - 1

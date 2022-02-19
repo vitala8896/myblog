@@ -8,7 +8,7 @@ const Drawer = props => {
   const clickHandler = () => {
     props.onClose()
   }
-  const renderLinks = (links) => {
+  const renderLinks = links => {
     return links.map((link, index) => {
       return (
         <div key={index}>

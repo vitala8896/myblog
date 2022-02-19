@@ -98,7 +98,7 @@ class AnnouncementCreator extends Component {
           <h1>Create a announcement</h1>
           <form onSubmit={this.submitHandler} className={classes.form}>
             {this.renderControls()}
-            <Button type="success" onClick={this.createAnnouncementHandler} disabled={this.props.post.length === 0}>Create a announcement</Button>
+            <Button type="success" onClick={this.createAnnouncementHandler} disabled="true">Create a announcement</Button>
         </form>
       </div>
     )

@@ -43,8 +43,9 @@ export function fetchPostsError(e) {
     error: e
   }
 }
-export function getDataPosts() {
+export function getDataPosts() {  
   return async dispatch => {
+    dispatch(fetchPostsStart())
     try {
       await axios.get('/posts').then(response => {
         dispatch(setDataPosts(response.data.reverse()))

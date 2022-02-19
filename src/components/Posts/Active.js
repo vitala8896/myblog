@@ -12,13 +12,15 @@ import { finishDeletePost } from './../../Services/actions/create'
 const ActivePost = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { index, posts, users, activePost } =
+  const { posts, users, activePost} =
   useSelector(state => ({
-    index: state.post.activePost - 1,
     posts: state.post.posts,
     users: state.post.users,
     activePost: state.post.activePost
   }))
+  const getIndex = () => {
+    return (posts.length - activePost)
+  }
   const getOtherPosts = () => {
     let arr = []
     posts.forEach((item, key) => {
@@ -29,9 +31,9 @@ const ActivePost = () => {
         userId: item.userId,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
-        key: key + 1
+        key: posts.length - key
       }
-      if (item.userId === posts[activePost - 1].userId && key + 1 !== activePost) {
+      if (item.userId === posts[getIndex()].userId && key  !== getIndex()) {
         arr.push(itemThis)
       }
     })
@@ -48,12 +50,12 @@ const ActivePost = () => {
     }
   }
   const isOtherPosts = () => {
-    dispatch(finishDeletePost(posts[index].id))
+    dispatch(finishDeletePost(posts[getIndex()].id))
     dispatch(setPageNum(1))
     return history.push('/')
   }
   const isAuth = () => {
-    return users[posts[index].userId - 1].id === +localStorage.getItem('userId')
+    return users[posts[getIndex()].userId - 1].id === +localStorage.getItem('userId')
   }
   useEffect(() => {
     getOtherPosts()
@@ -65,14 +67,14 @@ const ActivePost = () => {
           <NavLink to={'/'} onClick={() => {
             dispatch(setPageNum(1))
           }} className={classes.link}>
-            <p className={classes.name}>{users[posts[index].userId - 1].firstname} {users[posts[index].userId - 1].lastname}</p>
+            <p className={classes.name}>{users[posts[getIndex()].userId - 1].firstname} {users[posts[getIndex()].userId - 1].lastname}</p>
           </NavLink>
           {isAuth() &&
             <span className="material-icons" onClick={() => { history.push(`/posts/${activePost}/edit`) }}>edit</span>
           }
         </div>
-        <h1>{posts[index].title}</h1>
-        <p className={classes.body}>{posts[index].body}</p>
+        <h1>{posts[getIndex()].title}</h1>
+        <p className={classes.body}>{posts[getIndex()].body}</p>
         {isAuth() &&
           <div className={classes.dell}>
             <span className={"material-icons"} onClick={() => isOtherPosts()}>delete</span>
