@@ -177,8 +177,8 @@ class Auth extends Component {
             {this.renderInputs()}
             <div className={classes.btn}>
               {this.state.login ?
-              <Button type="success" onClick={this.loginHandler} disabled={!this.state.isFormValid}>Log in</Button>
-              : <Button type="primary" onClick={this.registerHandler} disabled={!this.state.isFormValid}>Register
+              <Button type="success" onClick={this.loginHandler} disabled={this.state.isFormValid}>Log in</Button>
+              : <Button type="primary" onClick={this.registerHandler} disabled={this.state.isFormValid}>Register
              </Button>
             }
             {this.state.login ? <a onClick={this.changeLogin}>go to register</a> : <a onClick={this.changeLogin}>go to login</a>}
