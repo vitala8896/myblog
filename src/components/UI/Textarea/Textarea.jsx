@@ -1,7 +1,6 @@
-import React from 'react'
 import classes from './Textarea.module.scss'
 
-const Textarea = props => {
+export const Textarea = props => {
   const isInvalid = ({valid, touched, shouldValidate}) => {
     return !valid && shouldValidate && touched
   }
@@ -21,4 +20,3 @@ const Textarea = props => {
    </div>
  )
 }
-export default Textarea

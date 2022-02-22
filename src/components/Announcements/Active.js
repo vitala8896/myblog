@@ -50,11 +50,10 @@ const ActiveAnnouncement = () => {
         </div>
         <h1>{announcements[getIndex()].title}</h1>
         <p>{announcements[getIndex()].body}</p>
-        {users[announcements[getIndex()].userId - 1].id === +localStorage.getItem('userId') ?
+        {users[announcements[getIndex()].userId - 1].id === +localStorage.getItem('userId') &&
           <div className={classes.dell}>
             <span className={"material-icons"} onClick={() => isOtherAnnouncements()}>delete</span>
-          </div> : null
-        }
+          </div>}
       </div>
       <OtherAnnouncements />
     </div>

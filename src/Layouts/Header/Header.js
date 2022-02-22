@@ -27,10 +27,9 @@ const Header = () => {
           >Announcements</NavLink>
           </li>
         </ul>
-        {token ?
+        {token &&
           <NavLink to='/'><img src={avatar} className={classes.avatar} alt="logo" onClick={goToStartPage} />
-          </NavLink> : null
-        }
+          </NavLink>}
       </div>
     </div>
   )

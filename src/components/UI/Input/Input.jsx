@@ -1,7 +1,6 @@
-import React from 'react'
 import classes from './Input.module.scss'
 
-const Input = props => {
+export const Input = props => {
   const isInvalid = ({ valid, touched, shouldValidate }) => {
     return !valid && shouldValidate && touched
   }
@@ -21,4 +20,3 @@ const Input = props => {
     </div>
   )
 }
-export default Input

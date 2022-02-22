@@ -59,7 +59,7 @@ const Posts = () => {
               <p className={classes.date}>{getDate(item.create)}</p>
             </div>
             <p className={classes.title}>{item.title}</p>
-            <p className={classes.body}>{item.body.substr(0, 230) + (item.body.length > 230 ? '...':'')}</p>
+            <p className={classes.body}>{item.body.substr(0, 230) + (item.body.length > 230 && '...')}</p>
           </NavLink>
         </div>
       )

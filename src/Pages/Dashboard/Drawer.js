@@ -51,10 +51,7 @@ const Drawer = props => {
           {renderLinks(links)}
         </ul>
       </nav>
-      {props.isOpen
-        ? <Backdrop onClick={props.onClose} />
-        : null
-      }
+      {props.isOpen && <Backdrop onClick={props.onClose} />}
     </React.Fragment>
   )
 }

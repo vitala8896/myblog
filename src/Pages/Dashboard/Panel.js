@@ -38,7 +38,7 @@ const Panel = () => {
           {pages.map((num, index) => {
             return <span className={pageNum === num
               ? classes.selectedPage
-              : null} key={index} onClick={() => {
+              : ''} key={index} onClick={() => {
                 dispatch(setPageNum(num))
               }}>{num}</span>
           })}
