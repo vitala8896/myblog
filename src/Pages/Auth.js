@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import { useState } from 'react'
+import { useDispatch } from "react-redux"
 import classes from './../Assets/Styles/Other/Auth.module.scss'
-import { connect } from 'react-redux'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
 import { authLogin, authRegister } from '../Services/actions/auth'
+
 
 const validateEmail = email => {
   return String(email).toLowerCase().match(
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   )
 }
-class Auth extends Component {
-  state = {
+const Auth = () => {
+  const dispatch = useDispatch()
+  const [state, setState] = useState({
     login: true,
     isFormValid: false,
     formControls: {
@@ -88,29 +90,29 @@ class Auth extends Component {
         }
       }
     }
-  }
-  loginHandler = () => {
-    this.props.authLogin(
-      this.state.formControls.email.value,
-      this.state.formControls.password.value,
+  })
+  const loginHandler = () => {
+    dispatch(authLogin(
+      state.formControls.email.value,
+      state.formControls.password.value,
       true
-    )
+    ))
   }
-  registerHandler = () => {
-    this.props.authRegister(
-      this.state.formControls.email.value,
-      this.state.formControls.password.value,
-      this.state.formControls.firstname.value,
-      this.state.formControls.lastname.value,
-      +this.state.formControls.age.value,
-      this.state.formControls.avatar.value,
+  const registerHandler = () => {
+    dispatch(authRegister(
+      state.formControls.email.value,
+      state.formControls.password.value,
+      state.formControls.firstname.value,
+      state.formControls.lastname.value,
+      state.formControls.age.value,
+      state.formControls.avatar.value,
       false
-    )
+    ))
   }
-  submitHandler = e => {
+  const submitHandler = e => {
     e.preventDefault()
   }
-  validateControl(value, validation) {
+  const validateControl = (value, validation) => {
     if (!validation) {
       return true
     }
@@ -126,31 +128,31 @@ class Auth extends Component {
     }
     return isValid
   }
-  onChangeHandler = (event, controlName) => {
-    const formControls = { ...this.state.formControls }
+  const onChangeHandler = (event, controlName) => {
+    const formControls = { ...state.formControls }
     const control = { ...formControls[controlName] }
     control.value = event.target.value
     control.touched = true
-    control.valid = this.validateControl(control.value, control.validation)
+    control.valid = validateControl(control.value, control.validation)
     formControls[controlName] = control
     let isFormValid = true
     Object.keys(formControls).forEach(name => {
       isFormValid = formControls[name].valid && isFormValid
     })
-    this.setState({
-      formControls, isFormValid
+    setState(prevState => {
+      return {...prevState, formControls, isFormValid}
     })
   }
-  renderInputs() {
-    return Object.keys(this.state.formControls).map((controlName, index) => {
-      if (this.state.login) {
+  const renderInputs = () => {
+    return Object.keys(state.formControls).map((controlName, index) => {
+      if (state.login) {
         if (controlName === 'firstname'
           || controlName === 'lastname'
           || controlName === 'age'
           || controlName === 'avatar'
         ) return
       }
-      const control = this.state.formControls[controlName]
+      const control = state.formControls[controlName]
       return (
         <Input
           key={controlName + index}
@@ -161,40 +163,33 @@ class Auth extends Component {
           label={control.label}
           shouldValidate={!!control.validation}
           errorMessage={control.errorMessage}
-          onChange={event => this.onChangeHandler(event, controlName)}
+          onChange={event => onChangeHandler(event, controlName)}
         />)
     })
   }
-  changeLogin = () => {
-    this.setState({ login : !this.state.login})
+  const changeLogin = () => {
+    setState(prevState => { 
+      return {...prevState, login : !state.login}
+    })
   }
-  render() {
     return (
       <div className={classes.Auth}>
         <div>
           <h1>Authorization</h1>
-          <form onSubmit={this.submitHandler} className={classes.AuthForm}>
-            {this.renderInputs()}
+          <form onSubmit={submitHandler} className={classes.AuthForm}>
+            {renderInputs()}
             <div className={classes.btn}>
-              {this.state.login ?
-              <Button type="success" onClick={this.loginHandler} disabled={this.state.isFormValid}>Log in</Button>
-              : <Button type="primary" onClick={this.registerHandler} disabled={this.state.isFormValid}>Register
+              {state.login ?
+              <Button type="success" onClick={loginHandler} disabled={state.isFormValid}>Log in</Button>
+              : <Button type="primary" onClick={registerHandler} disabled={state.isFormValid}>Register
              </Button>
             }
-            {this.state.login ? <a onClick={this.changeLogin}>go to register</a> : <a onClick={this.changeLogin}>go to login</a>}
+            {state.login ? <a onClick={changeLogin}>go to register</a> : <a onClick={changeLogin}>go to login</a>}
             </div>
           </form>
         </div>
       </div>
     )
-  }
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    authLogin: (email, password, isLogin) => dispatch(authLogin(email, password, isLogin)),
-    authRegister: (email, password, firstname,
-      lastname, age, avatar, isLogin) =>
-      dispatch(authRegister(email, password, firstname, lastname, age, avatar, isLogin)),
-  }
-}
-export default connect(null, mapDispatchToProps)(Auth)
+}      
+
+export default Auth

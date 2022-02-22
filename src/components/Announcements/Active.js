@@ -9,9 +9,8 @@ import { finishDeleteAnnouncement } from '../../Services/actions/create'
 const ActiveAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { index, announcements, activeAnnouncement, users } =
+  const { announcements, activeAnnouncement, users } =
     useSelector((state) => ({
-      index: state.post.activeAnnouncement - 1,
       announcements: state.post.announcements,
       activeAnnouncement: state.post.activeAnnouncement,
       users: state.post.users

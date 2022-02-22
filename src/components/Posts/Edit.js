@@ -10,9 +10,8 @@ import { createPost, finishDeletePost, finishUpdatePost } from './../../Services
 const Edit = () => {
   const dispatch = useDispatch()  
   let history = useHistory()
-  const { index, posts, users, activePost } =
-    useSelector((state) => ({
-      index: state.post.activePost - 1,
+  const { posts, users, activePost } =
+    useSelector(state => ({
       posts: state.post.posts,
       users: state.post.users,
       activePost: state.post.activePost

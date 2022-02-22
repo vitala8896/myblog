@@ -7,7 +7,6 @@ import { createAnnouncement, finishUpdateAnnouncement } from './../../Services/a
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
-
   let history = useHistory()
   const { users, announcements, activeAnnouncement } =
     useSelector(state => ({

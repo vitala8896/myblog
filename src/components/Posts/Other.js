@@ -6,14 +6,12 @@ import { setActivePost } from '../../Services/actions/post'
 
 const OtherPosts = () => {
   const dispatch = useDispatch()
-  const { index, posts, users, otherPosts, activePost } =
+  const { posts, users, otherPosts, activePost } =
     useSelector(state => ({
-      index: state.post.activePost - 1,
       posts: state.post.posts,
       users: state.post.users,
       otherPosts: state.post.otherPosts,
       activePost: state.post.activePost
-
     }))
   useEffect(() => {
     renderOtherPosts()

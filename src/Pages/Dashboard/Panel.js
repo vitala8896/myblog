@@ -1,19 +1,18 @@
 import { useEffect } from 'react'
-import classes from './../../Assets/Styles/Other/Panel.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
+import classes from './../../Assets/Styles/Other/Panel.module.scss'
 import { setPageNum, setPageCount } from '../../Services/actions/page'
 import { setDataPosts, setDataUsers} from '../../Services/actions/post'
 import axios from '../../axios/axios-post'
 
 const Panel = () => {
   const dispatch = useDispatch()
-  const { pageNum, pageSize, pageCount, posts, users, announcements } = useSelector(state => ({
+  const { pageNum, pageSize, pageCount, posts, users } = useSelector(state => ({
     pageNum: state.page.pageNum,
     pageSize: state.page.pageSize,
     pageCount: state.page.pageCount,
     posts: state.post.posts,
-    users: state.post.users,
-    announcements: state.post.announcements
+    users: state.post.users
   })
   )
   useEffect(() => {  
