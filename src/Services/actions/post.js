@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-post'
-import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
+import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_ACTIVE_POST_ITEM, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
 import { setPageCount } from './page'
 
 export function fetchPostById(postId) {
@@ -90,6 +90,12 @@ export function setDataAnnouncements(announcements) {
   return {
     type: SET_DATA_ANNOUNCEMENTS,
     announcements
+  }
+}
+export function setActivePostItem(item) {
+  return {
+    type: SET_ACTIVE_POST_ITEM,
+    item
   }
 }
 export function setActivePost(num) {

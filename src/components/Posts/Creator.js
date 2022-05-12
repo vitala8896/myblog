@@ -39,8 +39,7 @@ const PostCreator = () => {
   const [state, setState] = useState({
     isFormValid: false,
     formControls: createFormControl()
-  })
-  
+  })  
   const submitHandler = e => {
     e.preventDefault()
   }
@@ -60,7 +59,6 @@ const PostCreator = () => {
       formControls: createFormControl()
     }})
     dispatch(finishCreatePost())
-    finishCreatePost()    
   }
   const changeHandler = (value, controlName) => {
     const formControls = { ...state.formControls }
@@ -109,7 +107,8 @@ const PostCreator = () => {
         <h1>Create a post</h1>
         <form onSubmit={submitHandler} className={classes.form}>
           {renderControls()}
-          <Button type="success" onClick={createPostHandler} disabled={!state.isFormValid}>Create a post</Button>
+          <Button type="success" onClick={createPostHandler
+          } disabled={!state.isFormValid}>Create a post</Button>
       </form>
     </div>
   )

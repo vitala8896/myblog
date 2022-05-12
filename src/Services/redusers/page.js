@@ -2,7 +2,7 @@ import { PAGE_NUM, PAGE_SIZE, GET_AVATAR, PAGE_COUNT } from './../actions/action
 
 const initialState = {
   pageNum: 1,
-  pageCount: 1,
+  pageCount: [1],
   pageSize: 20,  
   avatarURL: 'https://s0.tchkcdn.com/i/1/1/80937_1802c6cf_1260804286_avatar_1940.jpg'
 }

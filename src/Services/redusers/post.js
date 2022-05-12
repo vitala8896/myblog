@@ -1,12 +1,13 @@
 import {
   FETCH_POSTS_START, FETCH_POSTS_SUCCESS,
   POST_SET_STATE, POST_RETRY, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_LIST,
-  SET_DATA_USERS, SET_ACTIVE_POST, SET_OTHER_POSTS, SET_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS
+  SET_DATA_USERS, SET_ACTIVE_POST, SET_ACTIVE_POST_ITEM, SET_OTHER_POSTS, SET_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS
 } from './../actions/actionTypes'
 
 const initialState = {
   list: [],
-  activePost: 0,
+  activePost: {},
+  activePostItem: {},
   activeAnnouncement: 0,
   otherPosts: [],
   otherAnnouncements: [],
@@ -52,6 +53,10 @@ export default function postReducer(state = initialState, action) {
     case SET_LIST:
       return {
         ...state, list: action.list, loading: false
+      }
+    case SET_ACTIVE_POST_ITEM:
+      return {
+        ...state, activePostItem: action.item, loading: false
       }
     case SET_ACTIVE_POST:
       return {

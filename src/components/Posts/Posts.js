@@ -1,12 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Posts.module.scss'
-import { setList } from '../../Services/actions/page'
-import { setActivePost, fetchPostsStart } from '../../Services/actions/post'
+import { setList, setPageCount } from '../../Services/actions/page'
+import { setActivePost, fetchPostsStart, setDataPosts, setDataUsers } from '../../Services/actions/post'
 import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
+import axios from '../../axios/axios-post'
+
 
 const Posts = () => {
   const dispatch = useDispatch()
@@ -21,33 +23,41 @@ const Posts = () => {
   useEffect(() => {
     createList()
     renderList()
-  }, [posts, users, pageNum])
+  }, [pageNum])
   const createList = async () => {
-    dispatch(fetchPostsStart())
-    let arrList = []
-    let start = (pageNum * pageSize) - pageSize
-    let end = pageNum * pageSize > posts.length ? posts.length : pageNum * pageSize
-    posts.slice(start, end).forEach((item, key) => {
-      let userId = posts[start + key].userId - 1
-      arrList.push({
-        id: item.id,
-        name: users[userId].firstname,
-        surname: users[userId].lastname,
-        avatar: users[userId].avatar,
-        title: item.title,
-        body: item.body,
-        create: item.createdAt
-      })
-    })
-    dispatch(setList(arrList))
+    dispatch(fetchPostsStart()) 
+    await axios.get('/users').then(response => {
+      dispatch(setDataUsers(response.data))
+    }) 
+    await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`).then(response => {
+      dispatch(setDataPosts(response.data))
+      let pages = Math.round(response.headers['x-total-count'] / pageSize)
+      let pagesArray = [];
+      for(let i = 1; i <= pages; i++) {
+        pagesArray.push(i)
+      }
+      dispatch(setPageCount(pagesArray))      
+      let arrList = []
+      posts.forEach(item => {    
+        arrList.push({
+          id: item.id,
+          name: users[item.userId-1].firstname,
+          surname: users[item.userId-1].lastname,
+          avatar: users[item.userId-1].avatar,
+          title: item.title,
+          body: item.body,
+          create: item.createdAt
+        })
+      })    
+      dispatch(setList(arrList))
+    })  
   }
   const renderList = () => {
-    return list.map((item, key) => {
-      let keyItem = posts.length - key-((pageNum-1)*pageSize)
+    return list.map(item => {
       return (
-        <div className={classes.item} key={keyItem}>
-          <NavLink to={'/posts/' + keyItem} onClick={() => {
-            dispatch(setActivePost(keyItem))
+        <div className={classes.item} key={item.id}>
+          <NavLink to={'/posts/' + item.id} onClick={() => {
+            dispatch(setActivePost(item.id))
           }} className={classes.link}>
             <div className={classes.item__header} >
               <div className={classes.imgAndName}>
@@ -59,7 +69,7 @@ const Posts = () => {
               <p className={classes.date}>{getDate(item.create)}</p>
             </div>
             <p className={classes.title}>{item.title}</p>
-            <p className={classes.body}>{item.body.substr(0, 230) + (item.body.length > 230 && '...')}</p>
+            <p className={classes.body}>{item.body.substr(0, 230) + (item.body.length > 230 ? '...':'')}</p>
           </NavLink>
         </div>
       )

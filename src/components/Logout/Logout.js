@@ -6,9 +6,8 @@ import { logout } from '../../Services/actions/auth'
 const Logout = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    logout()
+    dispatch(logout())
   }, [])
-  dispatch(logout())
   return <Redirect to={'/'} />
 }
 

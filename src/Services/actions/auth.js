@@ -34,7 +34,7 @@ export function autoLogout(time) {
     }, time * 1000)
   }
 }
-export function logout() {
+export const logout = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('userId')
   localStorage.removeItem('expirationDate')
