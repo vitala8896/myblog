@@ -1,6 +1,6 @@
 import axios from '../../axios/axios-post'
 import { CREATE_POST, CREATE_COMMENT, RESET_POST_CREATION, RESET_COMMENT_CREATION, CREATE_ANNOUNCEMENT, RESET_ANNOUNCEMENT_CREATION, DELETE_POST, RESET_POST_DELETE, RESET_COMMENT_DELETE } from './actionTypes'
-import { setDataPosts, setDataAnnouncements, setDataComments, setComments, getDataPosts } from './post'
+import { setDataPosts, setDataAnnouncements, setDataComments, setComments, getDataPosts, setDataUsers } from './post'
 import { setPageCount } from './page'
 
 export function createPost(item) {
@@ -69,11 +69,10 @@ export function finishUpdatePost(id) {
     try {
       await axios.patch(`/posts/` + id, getState().create.post)
       dispatch(resetPostCreation())
-      dispatch(getDataPosts())
+      dispatch(getDataPosts(1, 20))
     } catch (e) {
       console.log(e)
-    }
-    
+    }    
   }
 }
 export function finishUpdateAnnouncement(id) {
@@ -98,15 +97,23 @@ export function finishCreateComment(activePost) {
     dispatch(setComments(com))
   }
 }
-export function finishDeletePost(id) {
+export function finishDeletePost(id, pageNum, pageSize) {
   return async dispatch => {
     await axios.delete('/posts/' + id)
     dispatch(resetPostDelete())
-    await axios.get('/posts').then(response => {
-      dispatch(setDataPosts(response.data.reverse()))
-      const pageCount = Math.ceil(response.data.length / 20)
-      dispatch(setPageCount(pageCount))
-    })
+    await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`)
+      .then((response) => {
+        dispatch(setDataPosts(response.data))
+        let pages = Math.ceil(response.headers['x-total-count'] / pageSize)
+        let pagesArray = []
+        for (let i = 1; i <= pages; i++) {
+          pagesArray.push(i);
+        }
+        dispatch(setPageCount(pagesArray))
+      })      
+      await axios.get('/users').then(response => {
+        dispatch(setDataUsers(response.data))
+      })
   }
 }
 export function finishDeleteComment(id, activePost) {

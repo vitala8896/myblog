@@ -1,5 +1,5 @@
 import axios from '../../axios/axios-post'
-import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_ACTIVE_POST_ITEM, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS} from './actionTypes'
+import { FETCH_POSTS_START, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR, SET_DATA_POSTS, SET_DATA_COMMENTS, SET_DATA_ANNOUNCEMENTS, SET_DATA_USERS, SET_LIST, POST_RETRY, SET_ACTIVE_POST, SET_ACTIVE_POST_ITEM, SET_OTHER_POSTS, SET_COMMENTS, SET_ACTIVE_ANNOUNCEMENT, SET_OTHER_ANNOUNCEMENTS, SET_ACTIVE_ANNOUNCEMENT_ITEM} from './actionTypes'
 import { setPageCount } from './page'
 
 export function fetchPostById(postId) {
@@ -43,15 +43,23 @@ export function fetchPostsError(e) {
     error: e
   }
 }
-export function getDataPosts() {  
+export function getDataPosts(pageNum, pageSize) {  
   return async dispatch => {
     dispatch(fetchPostsStart())
     try {
-      await axios.get('/posts').then(response => {
-        dispatch(setDataPosts(response.data.reverse()))
-        const pageCount = Math.ceil(response.data.length / 20)
-        dispatch(setPageCount(pageCount))
+      await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`)
+      .then((response) => {
+        dispatch(setDataPosts(response.data))
+        let pages = Math.ceil(response.headers['x-total-count'] / pageSize)
+        let pagesArray = []
+        for (let i = 1; i <= pages; i++) {
+          pagesArray.push(i);
+        }
+        dispatch(setPageCount(pagesArray))
       })      
+      await axios.get('/users').then(response => {
+        dispatch(setDataUsers(response.data))
+      })     
     } catch (e) {
       console.log(e)
     }
@@ -108,6 +116,12 @@ export function setActiveAnnouncement(num) {
   return {
     type: SET_ACTIVE_ANNOUNCEMENT,
     num
+  }
+}
+export function setActiveAnnouncementItem(item) {
+  return {
+    type: SET_ACTIVE_ANNOUNCEMENT_ITEM,
+    item
   }
 }
 export function setList(list) {

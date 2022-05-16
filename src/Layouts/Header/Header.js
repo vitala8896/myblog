@@ -3,15 +3,19 @@ import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPageNum } from '../../Services/actions/page'
 import logo from './../../Assets/Images/blog-logo.png'
+import { getDataPosts } from '../../Services/actions/post'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const { avatar, token } = useSelector(state => ({
+  const { avatar, token, pageNum, pageSize } = useSelector(state => ({
     avatar: state.page.avatarURL,
-    token: state.auth.token
+    token: state.auth.token,
+    pageNum: state.page.pageNum,
+    pageSize: state.page.pageSize
   }))
   const goToStartPage = () => {
     dispatch(setPageNum(1))
+    getDataPosts(pageNum, pageSize)
   }
   return (
     <div className={classes.header}>

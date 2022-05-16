@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setOtherPosts, setComments, setActivePostItem } from "../../Services/actions/post"
-import OtherPosts from './Other'
+import { setActivePostItem, setActivePost, setDataUsers } from "../../Services/actions/post"
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
 import { setPageNum } from '../../Services/actions/page'
@@ -12,86 +11,69 @@ import { finishDeletePost } from './../../Services/actions/create'
 const ActivePost = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { posts, users, activePost, state} =
+  const { users, activePost, activePostItem, pageNum, pageSize } =
   useSelector(state => ({
-    posts: state.post.posts,
     users: state.post.users,
     activePost: state.post.activePost,
-    state
+    activePostItem: state.post.activePostItem,
+    pageNum: state.page.pageNum,
+    pageSize: state.page.pageSize
   }))
-  console.log(state)
-  useEffect(() => {
-    getActivePost()
-    getOtherPosts()
-  }, [activePost])
-  const getActivePost = async () => {
+  useEffect( async () => {    
+    const setURL = () => {
+      let numURL = +history.location.pathname.replace('/posts/', '')
+      dispatch(setActivePost(numURL))
+      return numURL
+    } 
+    let thisURL = activePost === 0? setURL() : activePost   
     try {
-      await axios.get(`/posts/${activePost}`).then(response => {
-        console.log(response)
-        dispatch(setActivePostItem(response.data))}) 
+      await axios.get('/users').then(response => {
+        dispatch(setDataUsers(response.data))
+      })
+      await axios.get(`/posts/${thisURL}`).then(response => {
+        dispatch(setActivePost(response.data.id))
+        dispatch(setActivePostItem(response.data))
+      }) 
     } catch (e) {
       console.log(e)
     }
-  }
-  const getOtherPosts = () => {
-    let arr = []
-    posts.forEach((item, key) => {
-      let itemThis = {
-        id: item.id,
-        title: item.title,
-        body: item.body,
-        userId: item.userId,
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt,
-        key: posts.length - key
-      }
-      if (item.userId === posts[activePost].userId && key  !== activePost) {
-        arr.push(itemThis)
-      }
-    })
-    dispatch(setOtherPosts(arr))
-    getActiveComments()
-  }  
-  const getActiveComments = async () => {
-    try {
-      const comments = await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`)
-      let com = comments.data
-      dispatch(setComments(com))
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  const isOtherPosts = () => {
-    dispatch(finishDeletePost(posts[activePost].id))
+  }, [])
+  
+  const dellPost = () => {    
+    dispatch(finishDeletePost(activePost, pageNum, pageSize))
     dispatch(setPageNum(1))
     return history.push('/')
   }
   const isAuth = () => {
-    return users[posts[activePost].userId - 1].id === +localStorage.getItem('userId')
+    return users[activePostItem.userId-1].id === +localStorage.getItem('userId')
   }  
-  return (
-    <div className={classes.activePost}>
-      <div className={classes.container}>
+  const render = () => {
+    if (activePostItem.id && users?.length) {
+      return  <div className={classes.container}>
         <div className={classes.header}>
           <NavLink to={'/'} onClick={() => {
             dispatch(setPageNum(1))
           }} className={classes.link}>
-            <p className={classes.name}>{users[posts[activePost].userId - 1].firstname} {users[posts[activePost].userId - 1].lastname}</p>
+            <p className={classes.name}> {users[activePostItem.userId-1].firstname} {users[activePostItem.userId-1].lastname}</p>
           </NavLink>
           {isAuth() &&
             <span className="material-icons" onClick={() => { history.push(`/posts/${activePost}/edit`) }}>edit</span>
           }
         </div>
-        <h1>{posts[activePost].title}</h1>
-        <p className={classes.body}>{posts[activePost].body}</p>
+        <h1>{activePostItem.title}</h1>
+        <p className={classes.body}>{activePostItem.body}</p>
         {isAuth() &&
           <div className={classes.dell}>
-            <span className={"material-icons"} onClick={() => isOtherPosts()}>delete</span>
+            <span className={"material-icons"} onClick={() => dellPost()}>delete</span>
           </div>
         }
       </div>
+    }    
+  }
+  return (
+    <div className={classes.activePost}>
+      {render()}
       <Comments />
-      <OtherPosts />
     </div>
   )
 }

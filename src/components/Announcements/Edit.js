@@ -1,65 +1,70 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Announcements/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
 import { setPageNum } from '../../Services/actions/page'
-import { createAnnouncement, finishUpdateAnnouncement } from './../../Services/actions/create'
+import { createAnnouncement, finishUpdateAnnouncement, finishDeleteAnnouncement, finishUpdatePost } from './../../Services/actions/create'
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { users, announcements, activeAnnouncement } =
+  const { users, activeAnnouncement, activeAnnouncementItem } =
     useSelector(state => ({
-      announcements: state.post.announcements,
       activeAnnouncement: state.post.activeAnnouncement,
+      activeAnnouncementItem: state.post.activeAnnouncementItem,
       users: state.post.users
     }))
-  const getIndex = () => {
-    return announcements.length - activeAnnouncement
-  }
-  const [title, setTitle] = useState(announcements[getIndex()].title)
-  const [body, setBody] = useState(announcements[getIndex()].body)
-  const isAuth = () => {
-    return users[announcements[getIndex()].userId - 1].id === +localStorage.getItem('userId')
-  }
-  const titleHandle = e => {
-    let val = e.target.value
-    setTitle(val)
-  }
-  const bodyHandle = e => {
-    let val = e.target.value
-    setBody(val)
-  }
-  const getItem = () => {
-    let announcementItem = {
-      title, body,
-      userId: +localStorage.getItem('userId'),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
+    const [title, setTitle] = useState(activeAnnouncementItem.title)
+    const [body, setBody] = useState(activeAnnouncementItem.body)  
+
+    const dellAnnouncement = () => {
+      dispatch(finishDeleteAnnouncement(activeAnnouncementItem.id))
+      return history.push('/announcements')
     }
-    dispatch(createAnnouncement(announcementItem))
-  }
-  return (
-    <div className={classes.editAnnouncement}>
-      <div className={classes.container}>
-        <div className={classes.header}>
-          <NavLink to={'/'} onClick={() => {
-            dispatch(setPageNum(1))
-          }} className={classes.link}>
-            <p className={classes.name}>{users[announcements[getIndex()].userId - 1].firstname} {users[announcements[getIndex()].userId - 1].lastname}</p>
-          </NavLink>
-          {isAuth() &&
-            <span className="material-icons" onClick={() => {
+    const isAuth = () => {
+      return activeAnnouncementItem.userId === +localStorage.getItem('userId')
+    }
+    const titleHandle = e => {
+      let val = e.target.value
+      setTitle(val)
+    }
+    const bodyHandle = e => {
+      let val = e.target.value
+      setBody(val)
+    }
+    const getItem = () => {
+      let announcementItem = {
+        title, body,
+        userId: +localStorage.getItem('userId'),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
+      }
+      dispatch(createAnnouncement(announcementItem))
+    }
+    return (
+      <div className={classes.editPost}>
+        <div className={classes.container}>
+          <div className={classes.header}>
+            <NavLink to={'/announcements'} className={classes.link}>
+              <p className={classes.name}>{activeAnnouncementItem.userId.firstname} {activeAnnouncementItem.userId.lastname}</p>
+            </NavLink>
+            {isAuth() &&
+              <span className="material-icons" onClick={() => {
               getItem()
-              dispatch(finishUpdateAnnouncement(announcements[getIndex()].id))
+              dispatch(finishUpdateAnnouncement(activeAnnouncementItem.id))
               history.push('/announcements')
-            }}>done_all</span>
+              }}>done_all</span>
+            }
+          </div>
+          <h1><input value={title} onChange={e => { titleHandle(e) }}/></h1>
+          <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }}/>
+          {isAuth() &&
+            <div className={classes.dell}>
+              <span className={"material-icons"} onClick={() => dellAnnouncement()}>delete</span>
+            </div>
           }
         </div>
-        <h1><input value={title} onChange={e => { titleHandle(e) }} /></h1>
-        <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }} />
       </div>
-    </div>
-  )
+    )
 }
 export default EditAnnouncement

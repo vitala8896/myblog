@@ -1,11 +1,12 @@
-.activeAnnouncement {
+.activePost {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 90px 0 50px;
   width: 100%;
   height: auto;
-  color: #fff;  
+  color: #fff; 
+  cursor: pointer;
   h1 {  
     margin-left: 10px;
   }
@@ -13,11 +14,10 @@
     color: #fff; 
     border-radius: 50%;
     padding: 8px;
-    cursor: pointer;
   }
   span:hover {
     background: rgb(8, 9, 63);
-    border-radius: 50%;
+    transition: all .6s ease-in;
   }
 }
 .container {
@@ -26,19 +26,21 @@
   border: 1px solid rgb(129, 129, 129);
   border-radius: 5px;
   background: linear-gradient(90deg, #5041b2 0%, #7969e6 100%);
-  padding: 20px;
-}
-.Wrapper:hover {
-  box-shadow: 1px 1px 20px #6d6d6d 
+  padding: 20px;  
 }
 .header {
   display: flex;
   justify-content: space-between;
 }
+.body {
+  margin: 0;
+}
 .dell {
   display: flex;
   justify-content: flex-end;
-  cursor: pointer;
+}
+.Wrapper:hover {
+  box-shadow: 1px 1px 20px #6d6d6d;
 }
 .name {
   color: white;
@@ -52,6 +54,7 @@
 .others {
   color: #000;
 }
+
 @media (max-width: 1250px){
   .container {
     width: 95%

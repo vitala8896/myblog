@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import person from './../../Assets/Images/person.svg'
 import CommentCreator from './Creator'
 import { finishDeleteComment } from '../../Services/actions/create'
+import axios from '../../axios/axios-post'
+import { setComments } from '../../Services/actions/post'
+
 
 const Comments = () => {
   const dispatch = useDispatch()
@@ -12,14 +15,13 @@ const Comments = () => {
     activePost: state.post.activePost,
     users: state.post.users
   }))
-  const renderActiveComments = () => {
-    let com = []
-    comments.forEach(item => {
-      if (item.postId === activePost) {
-        com.push(item)
-      }
-    })   
-    return com.map((item, key) => {      
+  useEffect(async () => {
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`).then(response => {
+      dispatch(setComments(response.data))
+    })      
+  }, [activePost])
+  const renderActiveComments = () => { 
+    return comments.map((item, key) => {      
       return (
         <div key={key} className={classes.item}>
           <div className={classes.img}>
@@ -35,7 +37,7 @@ const Comments = () => {
   }
   useEffect(() => {
     renderActiveComments()
-  })
+  }, [])
   return (
     <div className={classes.Comments}>
       <CommentCreator />

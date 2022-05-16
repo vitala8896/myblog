@@ -1,18 +1,21 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from 'react-redux'
 import classes from './../../Assets/Styles/Posts/Posts.module.scss'
 import { setList, setPageCount } from '../../Services/actions/page'
-import { setActivePost, fetchPostsStart, setDataPosts, setDataUsers } from '../../Services/actions/post'
+import {
+  setActivePost,
+  setDataPosts,
+  setDataUsers,
+} from '../../Services/actions/post'
 import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
 import axios from '../../axios/axios-post'
 
-
 const Posts = () => {
   const dispatch = useDispatch()
-  const { list, loading, pageNum, pageSize, posts, users } = useSelector(state => ({
+  const { posts, users, list, loading, pageNum, pageSize } = useSelector(state => ({
     list: state.post.list,
     loading: state.post.loading,
     pageNum: state.page.pageNum,
@@ -20,56 +23,66 @@ const Posts = () => {
     posts: state.post.posts,
     users: state.post.users
   }))
-  useEffect(() => {
-    createList()
-    renderList()
-  }, [pageNum])
-  const createList = async () => {
-    dispatch(fetchPostsStart()) 
+  useEffect(async () => {
+    await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`)
+    .then((response) => {
+      dispatch(setDataPosts(response.data))
+      let pages = Math.ceil(response.headers['x-total-count'] / pageSize)
+      let pagesArray = []
+      for (let i = 1; i <= pages; i++) {
+        pagesArray.push(i);
+      }
+      dispatch(setPageCount(pagesArray))
+    })      
     await axios.get('/users').then(response => {
       dispatch(setDataUsers(response.data))
-    }) 
-    await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`).then(response => {
-      dispatch(setDataPosts(response.data))
-      let pages = Math.round(response.headers['x-total-count'] / pageSize)
-      let pagesArray = [];
-      for(let i = 1; i <= pages; i++) {
-        pagesArray.push(i)
-      }
-      dispatch(setPageCount(pagesArray))      
-      let arrList = []
-      posts.forEach(item => {    
-        arrList.push({
+    })
+  }, [pageNum])  
+  
+  useEffect(() => {
+    if (posts?.length && users?.length) {
+      const list = posts.map(item => {
+        let ind = item.userId - 1
+        return {
           id: item.id,
-          name: users[item.userId-1].firstname,
-          surname: users[item.userId-1].lastname,
-          avatar: users[item.userId-1].avatar,
+          name: users[ind].firstname,
+          surname: users[ind].lastname,
+          avatar: users[ind].avatar,
           title: item.title,
           body: item.body,
-          create: item.createdAt
-        })
-      })    
-      dispatch(setList(arrList))
-    })  
-  }
+          create: item.createdAt,
+        };
+      });
+      dispatch(setList(list))
+    }
+  }, [posts, users])
+ 
   const renderList = () => {
     return list.map(item => {
       return (
         <div className={classes.item} key={item.id}>
-          <NavLink to={'/posts/' + item.id} onClick={() => {
-            dispatch(setActivePost(item.id))
-          }} className={classes.link}>
-            <div className={classes.item__header} >
+          <NavLink
+            to={'/posts/' + item.id}
+            onClick={() => {
+              dispatch(setActivePost(item.id));
+            }}
+            className={classes.link}
+          >
+            <div className={classes.item__header}>
               <div className={classes.imgAndName}>
                 <div className={classes.img}>
                   <img src={item.avatar ? item.avatar : person} alt='' />
                 </div>
-                <p className={classes.name}>{item.name} {item.surname}</p>
+                <p className={classes.name}>
+                  {item.name} {item.surname}
+                </p>
               </div>
               <p className={classes.date}>{getDate(item.create)}</p>
             </div>
             <p className={classes.title}>{item.title}</p>
-            <p className={classes.body}>{item.body.substr(0, 230) + (item.body.length > 230 ? '...':'')}</p>
+            <p className={classes.body}>
+              {item.body.substr(0, 230) + (item.body.length > 230 ? '...' : '')}
+            </p>
           </NavLink>
         </div>
       )
