@@ -3,9 +3,9 @@ import classes from './../../Assets/Styles/Comments/Comments.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import person from './../../Assets/Images/person.svg'
 import CommentCreator from './Creator'
-import { finishDeleteComment } from '../../Services/actions/create'
 import axios from '../../axios/axios-post'
 import { setComments } from '../../Services/actions/post'
+import { finishDeleteComment } from '../../Services/API/create'
 
 
 const Comments = () => {

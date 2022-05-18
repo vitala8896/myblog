@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Announcements/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
 import { setPageNum } from '../../Services/actions/page'
-import { createAnnouncement, finishUpdateAnnouncement, finishDeleteAnnouncement, finishUpdatePost } from './../../Services/actions/create'
+import { createAnnouncement, finishUpdatePost } from './../../Services/actions/create'
+import { finishDeleteAnnouncement, finishUpdateAnnouncement } from '../../Services/API/create'
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPageNum } from '../../Services/actions/page'
 import logo from './../../Assets/Images/blog-logo.png'
-import { getDataPosts } from '../../Services/actions/post'
+import { getDataPosts } from '../../Services/API/post'
 
 const Header = () => {
   const dispatch = useDispatch()

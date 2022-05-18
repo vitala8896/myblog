@@ -12,6 +12,7 @@ import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import Loader from './../UI/Loader/Loader'
 import axios from '../../axios/axios-post'
+import { logout } from '../../Services/actions/auth'
 
 const Posts = () => {
   const dispatch = useDispatch()
@@ -51,8 +52,8 @@ const Posts = () => {
           title: item.title,
           body: item.body,
           create: item.createdAt,
-        };
-      });
+        }
+      })
       dispatch(setList(list))
     }
   }, [posts, users])

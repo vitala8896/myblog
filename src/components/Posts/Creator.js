@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import classes from './../../Assets/Styles/Posts/Creator.module.scss'
 import { createControl, validate, validateForm } from '../UI/form/formFramework'
-import { createPost, finishCreatePost } from '../../Services/actions/create'
+import { createPost } from '../../Services/actions/create'
 import Button from '../UI/Button/Button'
 import Input from '../UI/Input/Input'
 import Textarea from '../UI/Textarea/Textarea'
 import Auxiliary from '../../Pages/Auxiliary'
+import { finishCreatePost } from '../../Services/API/create'
 
 
 

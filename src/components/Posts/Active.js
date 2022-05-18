@@ -6,7 +6,7 @@ import { setActivePostItem, setActivePost, setDataUsers } from "../../Services/a
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
 import { setPageNum } from '../../Services/actions/page'
-import { finishDeletePost } from './../../Services/actions/create'
+import { finishDeletePost } from '../../Services/API/create'
 
 const ActivePost = () => {
   const dispatch = useDispatch()

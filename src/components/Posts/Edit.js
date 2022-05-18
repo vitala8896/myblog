@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
 import { setPageNum } from '../../Services/actions/page'
-import { createPost, finishDeletePost, finishUpdatePost } from './../../Services/actions/create'
+import { createPost } from './../../Services/actions/create'
+import { finishDeletePost, finishUpdatePost } from '../../Services/API/create'
 
 const Edit = () => {
   const dispatch = useDispatch()  
   let history = useHistory()
-  const { posts, users, activePost, activePostItem } =
+  const { activePostItem } =
     useSelector(state => ({
-      posts: state.post.posts,
-      users: state.post.users,
-      activePost: state.post.activePost,
       activePostItem: state.post.activePostItem,
     }))
   const [title, setTitle] = useState(activePostItem.title)
@@ -42,9 +40,6 @@ const Edit = () => {
     }
     dispatch(createPost(postItem))
   }
-  useEffect(() => {
-    // getOtherPosts()
-  }, [])
   return (
     <div className={classes.editPost}>
       <div className={classes.container}>

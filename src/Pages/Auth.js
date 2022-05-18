@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux"
 import classes from './../Assets/Styles/Other/Auth.module.scss'
 import Button from '../components/UI/Button/Button'
 import Input from '../components/UI/Input/Input'
-import { authLogin, authRegister } from '../Services/actions/auth'
+import { authLogin, authRegister } from '../Services/API/auth'
+
 
 
 const validateEmail = email => {

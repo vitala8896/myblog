@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Announcements/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
 import { setActiveAnnouncement, setDataUsers, setActiveAnnouncementItem } from '../../Services/actions/post'
-import { finishDeleteAnnouncement } from '../../Services/actions/create'
 import axios from '../../axios/axios-post'
+import { finishDeleteAnnouncement } from '../../Services/API/create'
 
 const ActiveAnnouncement = () => {
   const dispatch = useDispatch()
