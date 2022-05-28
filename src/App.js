@@ -6,7 +6,6 @@ import './../src/Assets/Styles/App.module.scss'
 import Home from './Pages/Home'
 import Layout from './Pages/Layout'
 import Logout from './components/Logout/Logout'
-import { autoLogin } from './Services/actions/auth'
 import Header from './Layouts/Header/Header'
 import ActivePost from './components/Posts/Active'
 import Edit from './components/Posts/Edit'
@@ -16,6 +15,7 @@ import PostCreator from './components/Posts/Creator'
 import ActiveAnnouncement from './components/Announcements/Active'
 import AnnouncementCreator from './components/Announcements/Creator'
 import EditAnnouncement from './components/Announcements/Edit'
+import { autoLogin } from './store/authSlice';
 
 
 const App = () => {

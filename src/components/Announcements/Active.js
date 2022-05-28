@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Announcements/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setActiveAnnouncement, setDataUsers, setActiveAnnouncementItem } from '../../Services/actions/post'
 import axios from '../../axios/axios-post'
 import { finishDeleteAnnouncement } from '../../Services/API/create'
+import { setReduxUsers, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem } from '../../store/postsSlice'
 
 const ActiveAnnouncement = () => {
   const dispatch = useDispatch()
@@ -18,17 +18,17 @@ const ActiveAnnouncement = () => {
   useEffect( async () => {    
     const setURL = () => {
       let numURL = +history.location.pathname.replace('/announcements/', '')
-      dispatch(setActiveAnnouncement(numURL))
+      dispatch(setReduxActiveAnnouncement(numURL))
       return numURL
     } 
     let thisURL = activeAnnouncement === 0? setURL() : activeAnnouncement  
     try {
       await axios.get('/users').then(response => {
-        dispatch(setDataUsers(response.data))
+        dispatch(setReduxUsers(response.data))
       })
       await axios.get(`/announcements/${thisURL}`).then(response => {
-        dispatch(setActiveAnnouncement(response.data.id))
-        dispatch(setActiveAnnouncementItem(response.data))
+        dispatch(setReduxActiveAnnouncement(response.data.id))
+        dispatch(setReduxActiveAnnouncementItem(response.data))
       }) 
     } catch (e) {
       console.log(e)

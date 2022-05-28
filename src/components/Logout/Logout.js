@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { logout } from '../../Services/actions/auth'
+import { logout } from './../../store/authSlice'
 
 const Logout = () => {
   const dispatch = useDispatch()

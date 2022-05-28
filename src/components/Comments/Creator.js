@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import classes from './../../Assets/Styles/Comments/Creator.module.scss'
-import person from './../../Assets/Images/person.svg'
 import { useSelector, useDispatch } from 'react-redux'
-import { createComment } from './../../Services/actions/create'
 import { finishCreateComment } from '../../Services/API/create'
+import { createComment } from '../../store/createSlice'
 
 const CommentCreator = () => {
   const dispatch = useDispatch()
   const [value, setValue] = useState('')
-  const { activePost, users } = useSelector(state => ({
-    activePost: state.post.activePost,
-    users: state.post.users
+  const { activePost } = useSelector(state => ({
+    activePost: state.post.activePost
   }))
   const onChangeHandler = e => {
     setValue(e.target.value)
@@ -22,10 +20,6 @@ const CommentCreator = () => {
       updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
     }
     dispatch(createComment(item))
-  }
-  const userId = () => {
-    let userId = +localStorage.getItem('userId') - 1
-    return userId
   }
   return (
     <>

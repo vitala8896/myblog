@@ -1,14 +1,15 @@
 import axios from '../../axios/axios-post'
-import { resetPostCreation, resetAnnouncementCreation, resetCommentCreation, resetPostDelete, resetCommentDelete } from '../actions/create'
-import { setDataComments, setComments, setDataPosts, setDataUsers, setDataAnnouncements } from '../actions/post'
-import { setPageCount } from './../actions/page'
-import { getDataPosts } from './post'
+import { resetCommentCreation, resetCommentDelete } from '../../store/createSlice'
+import { setReduxAnnouncements, setReduxComments, setReduxPosts, setReduxUsers, resetPostCreation } from '../../store/postsSlice'
+import { getReduxPosts } from './post'
+import { setReduxPageCount } from '../../store/pageSlice'
+import { resetPostDelete, resetAnnouncementCreation } from '../../store/createSlice'
 
 export const finishCreatePost = () => {
   return async (dispatch, getState) => {
     await axios.post('/posts', getState().create.post)
     dispatch(resetPostCreation())
-    dispatch(getDataPosts())
+    dispatch(getReduxPosts())
   }
 }
 export const finishCreateAnnouncement = () => {
@@ -22,7 +23,7 @@ export const finishUpdatePost = id => {
     try {
       await axios.patch(`/posts/` + id, getState().create.post)
       dispatch(resetPostCreation())
-      dispatch(getDataPosts(1, 20))
+      dispatch(getReduxPosts())
     } catch (e) {
       console.log(e)
     }    
@@ -42,12 +43,9 @@ export const finishCreateComment = activePost => {
   return async (dispatch, getState) => {
     await axios.post('/comments', getState().create.comment)
     dispatch(resetCommentCreation())
-    await axios.get('/comments').then(response => {
-      dispatch(setDataComments(response.data))
-    })
-    const comments = await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`)
-    let com = comments.data
-    dispatch(setComments(com))
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`).then(response => {
+      dispatch(setReduxComments(response.data))
+    })    
   }
 }
 export const finishDeletePost = (id, pageNum, pageSize) => {
@@ -56,16 +54,16 @@ export const finishDeletePost = (id, pageNum, pageSize) => {
     dispatch(resetPostDelete())
     await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`)
       .then((response) => {
-        dispatch(setDataPosts(response.data))
+        dispatch(setReduxPosts(response.data))
         let pages = Math.ceil(response.headers['x-total-count'] / pageSize)
         let pagesArray = []
         for (let i = 1; i <= pages; i++) {
           pagesArray.push(i);
         }
-        dispatch(setPageCount(pagesArray))
+        dispatch(setReduxPageCount(pagesArray))
       })      
       await axios.get('/users').then(response => {
-        dispatch(setDataUsers(response.data))
+        dispatch(setReduxUsers(response.data))
       })
   }
 }
@@ -73,19 +71,19 @@ export const finishDeleteComment = (id, activePost) => {
   return async dispatch => {
     await axios.delete('/comments/' + id)
     dispatch(resetCommentDelete())
-    await axios.get('/comments').then(response => {
-      dispatch(setDataComments(response.data))
-    })
-    const comments = await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`)
-    let com = comments.data
-    dispatch(setComments(com))
+    // await axios.get('/comments').then(response => {
+    //   dispatch(setReduxComments(response.data))
+    // })
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`).then(response => {
+      dispatch(setReduxComments(response.data))
+    })    
   }
 }
 export const finishDeleteAnnouncement = id => {
   return async dispatch => {
     await axios.delete('/announcements/' + id)
     await axios.get('/announcements').then(response => {
-      dispatch(setDataAnnouncements(response.data))
+      dispatch(setReduxAnnouncements(response.data))
     })
   }
 }

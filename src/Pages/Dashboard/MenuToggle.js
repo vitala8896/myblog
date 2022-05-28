@@ -1,4 +1,3 @@
-import React from 'react'
 import classes from './../../Assets/Styles/Other/MenuToggle.module.scss'
 
 const MenuToggle = props => {

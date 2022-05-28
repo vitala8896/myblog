@@ -1,9 +1,9 @@
+import { useSelector, useDispatch } from 'react-redux'
 import classes from './../../Assets/Styles/Other/Header.module.scss'
 import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { setPageNum } from '../../Services/actions/page'
 import logo from './../../Assets/Images/blog-logo.png'
-import { getDataPosts } from '../../Services/API/post'
+import { getReduxPosts } from '../../Services/API/post'
+import { setReduxPageNum } from '../../store/pageSlice'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -14,8 +14,8 @@ const Header = () => {
     pageSize: state.page.pageSize
   }))
   const goToStartPage = () => {
-    dispatch(setPageNum(1))
-    getDataPosts(pageNum, pageSize)
+    dispatch(setReduxPageNum(1))
+    getReduxPosts(pageNum, pageSize)
   }
   return (
     <div className={classes.header}>

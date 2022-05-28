@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import person from './../../Assets/Images/person.svg'
 import CommentCreator from './Creator'
 import axios from '../../axios/axios-post'
-import { setComments } from '../../Services/actions/post'
 import { finishDeleteComment } from '../../Services/API/create'
+import { setReduxComments } from '../../store/postsSlice'
 
 
 const Comments = () => {
@@ -17,7 +17,7 @@ const Comments = () => {
   }))
   useEffect(async () => {
     await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`).then(response => {
-      dispatch(setComments(response.data))
+      dispatch(setReduxComments(response.data))
     })      
   }, [activePost])
   const renderActiveComments = () => { 

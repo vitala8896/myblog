@@ -4,19 +4,17 @@ import classes from './../../Assets/Styles/Announcements/Announcements.module.sc
 import axios from '../../axios/axios-post'
 import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
-import { setDataAnnouncements, setActiveAnnouncement, fetchPostsStart, setDataUsers } from '../../Services/actions/post'
 import getDate from '../myHooks/getDate'
-import Loader from './../UI/Loader/Loader'
+import { Loader } from './../UI/Loader/Loader'
+import { setReduxUsers, setReduxAnnouncements, setReduxActiveAnnouncement, fetchPostsStart } from '../../store/postsSlice'
 
 const Announcements = () => {
   const dispatch = useDispatch()
-  const { announcements, users, loading, state } = useSelector(state => ({
+  const { announcements, users, loading } = useSelector(state => ({
     announcements: state.post.announcements,
     users: state.post.users,
-    loading: state.post.loading,
-    state
+    loading: state.post.loading
   }))
-  // console.log(state)
   useEffect(async() => {
     await createList()
     await renderList()
@@ -25,10 +23,10 @@ const Announcements = () => {
     dispatch(fetchPostsStart())
     try {
       await axios.get('/users').then(response => {
-        dispatch(setDataUsers(response.data))
+        dispatch(setReduxUsers(response.data))
       })
       await axios.get(`/announcements?_sort=id&_order=desc`).then(response => {
-      dispatch(setDataAnnouncements(response.data))    
+      dispatch(setReduxAnnouncements(response.data))    
       })      
     } catch (e) {
       console.log(e)
@@ -40,7 +38,7 @@ const Announcements = () => {
       return (
         <div className={classes.item} key={key}>
           <NavLink to={'/announcements/' + item.id} onClick={() => {
-            dispatch(setActiveAnnouncement(item.id))
+            dispatch(setReduxActiveAnnouncement(item.id))
           }} className={classes.link}>
             <div className={classes.item__header} >
               <div className={classes.imgAndName}>

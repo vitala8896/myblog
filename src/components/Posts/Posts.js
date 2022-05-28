@@ -1,18 +1,13 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import classes from './../../Assets/Styles/Posts/Posts.module.scss'
-import { setList, setPageCount } from '../../Services/actions/page'
-import {
-  setActivePost,
-  setDataPosts,
-  setDataUsers,
-} from '../../Services/actions/post'
 import person from './../../Assets/Images/person.svg'
 import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
-import Loader from './../UI/Loader/Loader'
+import { Loader } from './../UI/Loader/Loader'
 import axios from '../../axios/axios-post'
-import { logout } from '../../Services/actions/auth'
+import { setReduxPosts, setReduxUsers, setReduxList, setReduxActivePost } from '../../store/postsSlice'
+import { setReduxPageCount } from '../../store/pageSlice'
 
 const Posts = () => {
   const dispatch = useDispatch()
@@ -27,16 +22,16 @@ const Posts = () => {
   useEffect(async () => {
     await axios.get(`/posts?_page=${pageNum}&_limit=${pageSize}&_sort=id&_order=desc`)
     .then((response) => {
-      dispatch(setDataPosts(response.data))
+      dispatch(setReduxPosts(response.data))
       let pages = Math.ceil(response.headers['x-total-count'] / pageSize)
       let pagesArray = []
       for (let i = 1; i <= pages; i++) {
         pagesArray.push(i);
       }
-      dispatch(setPageCount(pagesArray))
+      dispatch(setReduxPageCount(pagesArray))
     })      
     await axios.get('/users').then(response => {
-      dispatch(setDataUsers(response.data))
+      dispatch(setReduxUsers(response.data))
     })
   }, [pageNum])  
   
@@ -54,7 +49,7 @@ const Posts = () => {
           create: item.createdAt,
         }
       })
-      dispatch(setList(list))
+      dispatch(setReduxList(list))
     }
   }, [posts, users])
  
@@ -65,7 +60,7 @@ const Posts = () => {
           <NavLink
             to={'/posts/' + item.id}
             onClick={() => {
-              dispatch(setActivePost(item.id));
+              dispatch(setReduxActivePost(item.id));
             }}
             className={classes.link}
           >

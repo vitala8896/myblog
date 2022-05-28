@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Active.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setActivePostItem, setActivePost, setDataUsers } from "../../Services/actions/post"
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
-import { setPageNum } from '../../Services/actions/page'
 import { finishDeletePost } from '../../Services/API/create'
+import { setReduxActivePost, setReduxActivePostItem, setReduxUsers } from '../../store/postsSlice'
+import { setReduxPageNum } from '../../store/pageSlice'
 
 const ActivePost = () => {
   const dispatch = useDispatch()
@@ -22,17 +22,17 @@ const ActivePost = () => {
   useEffect( async () => {    
     const setURL = () => {
       let numURL = +history.location.pathname.replace('/posts/', '')
-      dispatch(setActivePost(numURL))
+      dispatch(setReduxActivePost(numURL))
       return numURL
     } 
     let thisURL = activePost === 0? setURL() : activePost   
     try {
       await axios.get('/users').then(response => {
-        dispatch(setDataUsers(response.data))
+        dispatch(setReduxUsers(response.data))
       })
       await axios.get(`/posts/${thisURL}`).then(response => {
-        dispatch(setActivePost(response.data.id))
-        dispatch(setActivePostItem(response.data))
+        dispatch(setReduxActivePost(response.data.id))
+        dispatch(setReduxActivePostItem(response.data))
       }) 
     } catch (e) {
       console.log(e)
@@ -41,7 +41,7 @@ const ActivePost = () => {
   
   const dellPost = () => {    
     dispatch(finishDeletePost(activePost, pageNum, pageSize))
-    dispatch(setPageNum(1))
+    dispatch(setReduxPageNum(1))
     return history.push('/')
   }
   const isAuth = () => {
@@ -52,7 +52,7 @@ const ActivePost = () => {
       return  <div className={classes.container}>
         <div className={classes.header}>
           <NavLink to={'/'} onClick={() => {
-            dispatch(setPageNum(1))
+            dispatch(setReduxPageNum(1))
           }} className={classes.link}>
             <p className={classes.name}> {users[activePostItem.userId-1].firstname} {users[activePostItem.userId-1].lastname}</p>
           </NavLink>

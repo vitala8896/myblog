@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Posts/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setPageNum } from '../../Services/actions/page'
-import { createPost } from './../../Services/actions/create'
 import { finishDeletePost, finishUpdatePost } from '../../Services/API/create'
+import { setReduxPageNum } from '../../store/pageSlice'
+import { createPost } from '../../store/createSlice'
 
 const Edit = () => {
   const dispatch = useDispatch()  
@@ -17,7 +17,7 @@ const Edit = () => {
   const [body, setBody] = useState(activePostItem.body)  
   const isOtherPosts = () => {
     dispatch(finishDeletePost(activePostItem.id))
-    dispatch(setPageNum(1))
+    dispatch(setReduxPageNum(1))
     return history.push('/')
   }
   const isAuth = () => {
@@ -45,7 +45,7 @@ const Edit = () => {
       <div className={classes.container}>
         <div className={classes.header}>
           <NavLink to={'/'} onClick={() => {
-            dispatch(setPageNum(1))
+            dispatch(setReduxPageNum(1))
           }} className={classes.link}>
             <p className={classes.name}>{activePostItem.userId.firstname} {activePostItem.userId.lastname}</p>
           </NavLink>

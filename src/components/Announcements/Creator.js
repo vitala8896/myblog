@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import classes from './../../Assets/Styles/Announcements/Creator.module.scss'
 import { createControl, validate, validateForm } from '../UI/form/formFramework'
-import { createAnnouncement } from '../../Services/actions/create'
-import Button from '../UI/Button/Button'
-import Input from '../UI/Input/Input'
-import Textarea from '../UI/Textarea/Textarea'
-import Auxiliary from '../../Pages/Auxiliary'
+import { Button } from '../UI/Button/Button'
+import { Input } from '../UI/Input/Input'
+import { Textarea } from '../UI/Textarea/Textarea'
+import { Auxiliary } from '../../Pages/Auxiliary'
 import { finishCreateAnnouncement } from '../../Services/API/create'
+import { createAnnouncement } from '../../store/createSlice'
 
 
 const createFormControl = () => {

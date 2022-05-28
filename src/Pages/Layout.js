@@ -4,7 +4,7 @@ import classes from './../Assets/Styles/Other/Layout.module.scss'
 import MenuToggle from './Dashboard/MenuToggle'
 import Drawer from './Dashboard/Drawer'
 
-const Layout = props => {
+export const Layout = props => {
   const [state, setState] = useState({
     menu: false
   })

@@ -1,19 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import classes from './../../Assets/Styles/Announcements/Edit.module.scss'
 import { NavLink, useHistory } from 'react-router-dom'
-import { setPageNum } from '../../Services/actions/page'
-import { createAnnouncement, finishUpdatePost } from './../../Services/actions/create'
 import { finishDeleteAnnouncement, finishUpdateAnnouncement } from '../../Services/API/create'
+import { createAnnouncement } from '../../store/createSlice'
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { users, activeAnnouncement, activeAnnouncementItem } =
+  const { activeAnnouncementItem } =
     useSelector(state => ({
-      activeAnnouncement: state.post.activeAnnouncement,
-      activeAnnouncementItem: state.post.activeAnnouncementItem,
-      users: state.post.users
+      activeAnnouncementItem: state.post.activeAnnouncementItem
     }))
     const [title, setTitle] = useState(activeAnnouncementItem.title)
     const [body, setBody] = useState(activeAnnouncementItem.body)  

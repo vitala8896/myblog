@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './../../Assets/Styles/Other/Drawer.module.scss'
 import { NavLink } from 'react-router-dom'
-import Backdrop from '../../components/UI/Backdrop/Backdrop'
+import { Backdrop } from '../../components/UI/Backdrop/Backdrop'
 
 
 const Drawer = props => {

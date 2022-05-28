@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import classes from './../../Assets/Styles/Other/Panel.module.scss'
-import { setPageNum } from '../../Services/actions/page'
+import { setReduxPageNum } from '../../store/pageSlice'
 
 const Panel = () => {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const Panel = () => {
             return <span className={pageNum === num
               ? classes.selectedPage
               : ''} key={num} onClick={() => {
-                dispatch(setPageNum(num))
+                dispatch(setReduxPageNum(num))
               }}>{num}</span>
           })}
         </div>
