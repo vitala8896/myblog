@@ -1,23 +1,24 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './../../Assets/Styles/Posts/Active.module.scss'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Comments from '../Comments/Comments'
 import axios from '../../axios/axios-post'
 import { finishDeletePost } from '../../Services/API/create'
-import { setReduxActivePost, setReduxActivePostItem, setReduxUsers } from '../../store/postsSlice'
-import { setReduxPageNum } from '../../store/pageSlice'
+import { setReduxActivePost, setReduxActivePostItem } from '../../store/postSlice'
+import { setReduxUsers } from '../../store/userSlice'
+import { setReduxPageNum } from '../../store/postSlice'
+import { Active, Container, Title, Header, Body, Name, Dell, Icon, StyledNavLink } from '../../Assets/Styles/Posts/Active'
 
 const ActivePost = () => {
   const dispatch = useDispatch()
   let history = useHistory()
   const { users, activePost, activePostItem, pageNum, pageSize } =
   useSelector(state => ({
-    users: state.post.users,
-    activePost: state.post.activePost,
-    activePostItem: state.post.activePostItem,
-    pageNum: state.page.pageNum,
-    pageSize: state.page.pageSize
+    users: state.user.users,
+    activePost: state.post.posts.activePost,
+    activePostItem: state.post.posts.activePostItem,
+    pageNum: state.post.pagination.pageNum,
+    pageSize: state.post.pagination.pageSize
   }))
   useEffect( async () => {    
     const setURL = () => {
@@ -49,32 +50,32 @@ const ActivePost = () => {
   }  
   const render = () => {
     if (activePostItem.id && users?.length) {
-      return  <div className={classes.container}>
-        <div className={classes.header}>
-          <NavLink to={'/'} onClick={() => {
+      return  <Container>
+        <Header>
+          <StyledNavLink to={'/'} onClick={() => {
             dispatch(setReduxPageNum(1))
-          }} className={classes.link}>
-            <p className={classes.name}> {users[activePostItem.userId-1].firstname} {users[activePostItem.userId-1].lastname}</p>
-          </NavLink>
+          }}>
+            <Name> {users[activePostItem.userId-1].firstname} {users[activePostItem.userId-1].lastname}</Name>
+          </StyledNavLink>
           {isAuth() &&
-            <span className="material-icons" onClick={() => { history.push(`/posts/${activePost}/edit`) }}>edit</span>
+            <Icon className="material-icons" onClick={() => { history.push(`/posts/${activePost}/edit`) }}>edit</Icon>
           }
-        </div>
-        <h1>{activePostItem.title}</h1>
-        <p className={classes.body}>{activePostItem.body}</p>
+        </Header>
+        <Title>{activePostItem.title}</Title>
+        <Body>{activePostItem.body}</Body>
         {isAuth() &&
-          <div className={classes.dell}>
-            <span className={"material-icons"} onClick={() => dellPost()}>delete</span>
-          </div>
+          <Dell>
+            <Icon className={"material-icons"} onClick={() => dellPost()}>delete</Icon>
+          </Dell>
         }
-      </div>
+      </Container>
     }    
   }
   return (
-    <div className={classes.activePost}>
+    <Active>
       {render()}
       <Comments />
-    </div>
+    </Active>
   )
 }
 export default ActivePost

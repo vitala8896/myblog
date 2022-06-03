@@ -1,27 +1,27 @@
 import { useDispatch, useSelector } from 'react-redux'
-import classes from './../../Assets/Styles/Other/Panel.module.scss'
-import { setReduxPageNum } from '../../store/pageSlice'
+import { setReduxPageNum } from '../../store/postSlice'
+import { StylePanel, Container, Pagination, Num } from '../../Assets/Styles/Other/Panel'
 
 const Panel = () => {
   const dispatch = useDispatch()
   const { pageNum, pageCount } = useSelector(state => ({
-    pageNum: state.page.pageNum,
-    pageCount: state.page.pageCount
+    pageNum: state.post.pagination.pageNum,
+    pageCount: state.post.pagination.pageCount
   }))  
   return (
-    <div className={classes.panel}>
-      <div className={classes.container}>
-        <div className={classes.pagination}>
+    <StylePanel>
+      <Container>
+        <Pagination>
           { pageCount.map(num => {
-            return <span className={pageNum === num
-              ? classes.selectedPage
+            return <Num className={pageNum === num
+              ? 'Num selectedPage'
               : ''} key={num} onClick={() => {
                 dispatch(setReduxPageNum(num))
-              }}>{num}</span>
+              }}>{num}</Num>
           })}
-        </div>
-      </div>
-    </div>
+        </Pagination>
+      </Container>
+    </StylePanel>
   )
 }
 export default Panel

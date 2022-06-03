@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import classes from './../Assets/Styles/Other/Layout.module.scss'
+import { StyleLayout, Main } from './../Assets/Styles/Other/Layout' 
 import MenuToggle from './Dashboard/MenuToggle'
 import Drawer from './Dashboard/Drawer'
 
@@ -24,7 +24,7 @@ export const Layout = props => {
     })
   }
   return (
-    <div className={classes.Layout}>        
+    <StyleLayout>        
       <Drawer
         isOpen={state.menu}
         onClose={menuCloseHandler}
@@ -34,10 +34,10 @@ export const Layout = props => {
         onToggle={toggleMenuHandler}
         isOpen={state.menu}
       />
-      <main>
+      <Main>
         {props.children}
-      </main>
-    </div>
+      </Main>
+    </StyleLayout>
   )
 }  
 

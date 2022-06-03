@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useDispatch } from "react-redux"
-import classes from './../Assets/Styles/Other/Auth.module.scss'
+import { useDispatch } from 'react-redux'
 import { Button } from '../components/UI/Button/Button'
 import { Input } from '../components/UI/Input/Input'
 import { authLogin, authRegister } from '../Services/API/auth'
+import { StyleAuth, AuthForm, AuthWidth, GoTo, H1, Btn } from '../Assets/Styles/Other/Auth'
 
 
 const validateEmail = email => {
@@ -173,22 +173,22 @@ const Auth = () => {
     })
   }
     return (
-      <div className={classes.Auth}>
-        <div>
-          <h1>Authorization</h1>
-          <form onSubmit={submitHandler} className={classes.AuthForm}>
+      <StyleAuth>
+        <AuthWidth>
+          <H1>Authorization</H1>
+          <AuthForm onSubmit={submitHandler}>
             {renderInputs()}
-            <div className={classes.btn}>
+            <Btn>
               {state.login ?
               <Button type="success" onClick={loginHandler} disabled={state.isFormValid}>Log in</Button>
               : <Button type="primary" onClick={registerHandler} disabled={state.isFormValid}>Register
              </Button>
             }
-            {state.login ? <a onClick={changeLogin}>go to register</a> : <a onClick={changeLogin}>go to login</a>}
-            </div>
-          </form>
-        </div>
-      </div>
+            {state.login ? <GoTo onClick={changeLogin}>go to register</GoTo> : <GoTo onClick={changeLogin}>go to login</GoTo>}
+            </Btn>
+          </AuthForm>
+        </AuthWidth>
+      </StyleAuth>
     )
 }      
 

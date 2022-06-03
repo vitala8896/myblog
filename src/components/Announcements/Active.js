@@ -1,20 +1,23 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import classes from './../../Assets/Styles/Announcements/Active.module.scss'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import axios from '../../axios/axios-post'
 import { finishDeleteAnnouncement } from '../../Services/API/create'
-import { setReduxUsers, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem } from '../../store/postsSlice'
+import { setReduxActiveAnnouncement, setReduxActiveAnnouncementItem } from '../../store/postSlice'
+import { setReduxUsers } from '../../store/userSlice'
+import { Active, Container, H1, Icon, Header, Body, Name, Dell, StyledNavLink } from '../../Assets/Styles/Announcements/Active'
 
 const ActiveAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { activeAnnouncement, activeAnnouncementItem, users } =
+  const { activeAnnouncement, activeAnnouncementItem, users, state } =
   useSelector(state => ({
-    activeAnnouncement: state.post.activeAnnouncement,
-    activeAnnouncementItem: state.post.activeAnnouncementItem,
-    users: state.post.users
+    activeAnnouncement: state.post.announcements.activeAnnouncement,
+    activeAnnouncementItem: state.post.announcements.activeAnnouncementItem,
+    users: state.user.users,
+    state
   }))
+  // console.log(state) 
   useEffect( async () => {    
     const setURL = () => {
       let numURL = +history.location.pathname.replace('/announcements/', '')
@@ -43,30 +46,30 @@ const ActiveAnnouncement = () => {
   }  
   const render = () => {
     if (activeAnnouncementItem.id && users?.length) {
-      return  <div className={classes.container}>
-        <div className={classes.header}>
-          <NavLink to={'/announcements'}  className={classes.link}>
-            <p className={classes.name}> 
-            {users[activeAnnouncementItem.userId-1].firstname} {users[activeAnnouncementItem.userId-1].lastname}</p>
-          </NavLink>
+      return  <Container>
+        <Header>
+          <StyledNavLink to={'/announcements'}>
+            <Name> 
+            {users[activeAnnouncementItem.userId-1].firstname} {users[activeAnnouncementItem.userId-1].lastname}</Name>
+          </StyledNavLink>
           {isAuth() &&
-            <span className="material-icons" onClick={() => { history.push(`/announcements/${activeAnnouncement}/edit`) }}>edit</span>
+            <Icon className="material-icons" onClick={() => { history.push(`/announcements/${activeAnnouncement}/edit`) }}>edit</Icon>
           }
-        </div>
-        <h1>{activeAnnouncementItem.title}</h1>
-        <p className={classes.body}>{activeAnnouncementItem.body}</p>
+        </Header>
+        <H1>{activeAnnouncementItem.title}</H1>
+        <Body>{activeAnnouncementItem.body}</Body>
         {isAuth() &&
-          <div className={classes.dell}>
-            <span className={"material-icons"} onClick={() => dellAnnouncement()}>delete</span>
-          </div>
+          <Dell>
+            <Icon className={"material-icons"} onClick={() => dellAnnouncement()}>delete</Icon>
+          </Dell>
         }
-      </div>
+      </Container>
     }    
   }
   return (
-    <div className={classes.activePost}>
+    <Active>
       {render()}
-    </div>
+    </Active>
   )
 }
 export default ActiveAnnouncement

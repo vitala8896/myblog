@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
-import postsReducer from './postsSlice'
-import pageReducer from './pageSlice'
+import postReducer from './postSlice'
 import authReducer from './authSlice'
 import createReducer from './createSlice'
+import userReducer from './userSlice'
 
 export default configureStore({
   reducer: {
-    post: postsReducer,
-    page: pageReducer,
+    post: postReducer,
     create: createReducer,
     auth: authReducer,    
+    user: userReducer,    
   }
 })

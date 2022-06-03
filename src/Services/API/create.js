@@ -1,8 +1,9 @@
 import axios from '../../axios/axios-post'
 import { resetCommentCreation, resetCommentDelete } from '../../store/createSlice'
-import { setReduxAnnouncements, setReduxComments, setReduxPosts, setReduxUsers, resetPostCreation } from '../../store/postsSlice'
+import { setReduxAnnouncements, setReduxComments, setReduxPosts, resetPostCreation } from '../../store/postSlice'
+import { setReduxUsers } from '../../store/userSlice'
 import { getReduxPosts } from './post'
-import { setReduxPageCount } from '../../store/pageSlice'
+import { setReduxPageCount } from '../../store/postSlice'
 import { resetPostDelete, resetAnnouncementCreation } from '../../store/createSlice'
 
 export const finishCreatePost = () => {

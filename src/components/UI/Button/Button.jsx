@@ -1,17 +1,12 @@
-import classes from './../../../Assets/Styles/Other/Button.module.scss'
+import { StyleButton  } from './../../../Assets/Styles/Other/Button'
 
 export const Button = props => {  
-  const cls = [
-    classes.Button,
-    classes[props.type]
-  ]
   return (    
-    <button
+    <StyleButton
       onClick={props.onClick}
-      className={cls.join(' ')}
       disabled={props.disabled}
     >
       {props.children}
-    </button>
+    </StyleButton>
   )
 }

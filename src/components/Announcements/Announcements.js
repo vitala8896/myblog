@@ -1,20 +1,21 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import classes from './../../Assets/Styles/Announcements/Announcements.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from '../../axios/axios-post'
 import person from './../../Assets/Images/person.svg'
-import { NavLink } from 'react-router-dom'
 import getDate from '../myHooks/getDate'
 import { Loader } from './../UI/Loader/Loader'
-import { setReduxUsers, setReduxAnnouncements, setReduxActiveAnnouncement, fetchPostsStart } from '../../store/postsSlice'
+import { setReduxAnnouncements, setReduxActiveAnnouncement, fetchPostsStart } from '../../store/postSlice'
+import { setReduxUsers } from '../../store/userSlice'
+import { StyleAnnouncements, Container, Item, Name, Title, Body, ItemHeader, ImgAndName, StyledNavLink, Img, Date, H1 } from '../../Assets/Styles/Announcements/Announcements'
 
 const Announcements = () => {
   const dispatch = useDispatch()
   const { announcements, users, loading } = useSelector(state => ({
-    announcements: state.post.announcements,
-    users: state.post.users,
+    announcements: state.post.announcements.announcements,
+    users: state.user.users,
     loading: state.post.loading
   }))
+  // console.log(announcements)
   useEffect(async() => {
     await createList()
     await renderList()
@@ -36,33 +37,33 @@ const Announcements = () => {
     return announcements.map((item, key) => {
       let userId = item.userId - 1
       return (
-        <div className={classes.item} key={key}>
-          <NavLink to={'/announcements/' + item.id} onClick={() => {
+        <Item key={key}>
+          <StyledNavLink to={'/announcements/' + item.id} onClick={() => {
             dispatch(setReduxActiveAnnouncement(item.id))
-          }} className={classes.link}>
-            <div className={classes.item__header} >
-              <div className={classes.imgAndName}>
-                <img src={person} alt='' />
-                <p className={classes.name} >
+          }}>
+            <ItemHeader>
+              <ImgAndName>
+                <Img src={person} alt='' />
+                <Name>
                   {users[userId].firstname} {users[userId].lastname}
-                </p>
-              </div>
-              <p>{getDate(item.createdAt)}</p>
-            </div>
-            <p className={classes.title}>{item.title}</p>
-            <p className={classes.body}>{item.body.substr(0, 600)}</p>
-          </NavLink>
-        </div>
+                </Name>
+              </ImgAndName>
+              <Date>{getDate(item.createdAt)}</Date>
+            </ItemHeader>
+            <Title>{item.title}</Title>
+            <Body>{item.body.substr(0, 600)}</Body>
+          </StyledNavLink>
+        </Item>
       )
     })
   }
   return (
-    <div className={classes.Announcements}>
-      <h1>Announcements</h1>
-      <div className={classes.container}>
+    <StyleAnnouncements>
+      <H1>Announcements</H1>
+      <Container>
         {loading ?<Loader /> : renderList()}
-      </div>
-    </div>
+      </Container>
+    </StyleAnnouncements>
   )
 }
 export default Announcements

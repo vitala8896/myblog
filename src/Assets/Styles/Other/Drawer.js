@@ -1,4 +1,7 @@
-.Drawer {
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
+
+export const StyleDrawer = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -10,19 +13,16 @@
   transition: transform .22s ease-in;
   z-index: 90;
   background: #ebf0ff;
-}
-.Drawer.close {
-  transform: translateX(-300px)
-}
-.Drawer ul {
+  &.close {
+    transform: translateX(-300px)
+  }
+`;
+export const List = styled.ul`
   list-style: none;
   margin: 0;
   padding: 60px 0 0;
-}
-.Drawer ul li {
-  margin-bottom: 30px;
-}
-.Drawer ul li a {
+`;
+export const StyledNavLink = styled(NavLink)`
   position: relative; 
   color: #363d54;
   font-size: 30px;
@@ -30,14 +30,12 @@
   background: #ebf0ff;
   line-height: 1;
   transition: opacity .3s;
-}
-.Drawer ul li a:hover, .active {
-  opacity: .7;
-}
-.appLogo {
-  width: 70px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-}
+  cursor: pointer;
+  margin-bottom: 30px;
+  &.active {
+    opacity: .7;
+  }
+  :hover {
+    opacity: .7;
+  }
+`;

@@ -1,6 +1,7 @@
 import axios from '../../axios/axios-post'
-import { fetchPostsStart, setReduxUsers, setReduxPosts } from '../../store/postsSlice'
-import { setReduxPageCount } from '../../store/pageSlice'
+import { fetchPostsStart, setReduxPosts } from '../../store/postSlice'
+import { setReduxUsers } from '../../store/userSlice'
+import { setReduxPageCount } from '../../store/postSlice'
 
 export const getReduxPosts = (pageNum, pageSize) => {  
   return async dispatch => {

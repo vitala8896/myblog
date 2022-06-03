@@ -1,16 +1,17 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import classes from './../../Assets/Styles/Announcements/Edit.module.scss'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { finishDeleteAnnouncement, finishUpdateAnnouncement } from '../../Services/API/create'
 import { createAnnouncement } from '../../store/createSlice'
+import { EditAnnouncements, Container, Name, Header, Title, Body, Icon, Dell, StyledNavLink } from '../../Assets/Styles/Announcements/Edit'
 
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { activeAnnouncementItem } =
+  const { activeAnnouncementItem, users } =
     useSelector(state => ({
-      activeAnnouncementItem: state.post.activeAnnouncementItem
+      activeAnnouncementItem: state.post.announcements.activeAnnouncementItem,
+      users: state.user.users
     }))
     const [title, setTitle] = useState(activeAnnouncementItem.title)
     const [body, setBody] = useState(activeAnnouncementItem.body)  
@@ -40,29 +41,29 @@ const EditAnnouncement = () => {
       dispatch(createAnnouncement(announcementItem))
     }
     return (
-      <div className={classes.editPost}>
-        <div className={classes.container}>
-          <div className={classes.header}>
-            <NavLink to={'/announcements'} className={classes.link}>
-              <p className={classes.name}>{activeAnnouncementItem.userId.firstname} {activeAnnouncementItem.userId.lastname}</p>
-            </NavLink>
+      <EditAnnouncements>
+        <Container>
+          <Header>
+            <StyledNavLink to={'/announcements'}>
+              <Name>{users[activeAnnouncementItem.userId-1].firstname} {users[activeAnnouncementItem.userId-1].lastname}</Name>
+            </StyledNavLink>            
             {isAuth() &&
-              <span className="material-icons" onClick={() => {
+              <Icon className="material-icons" onClick={() => {
               getItem()
               dispatch(finishUpdateAnnouncement(activeAnnouncementItem.id))
               history.push('/announcements')
-              }}>done_all</span>
+              }}>done_all</Icon>
             }
-          </div>
-          <h1><input value={title} onChange={e => { titleHandle(e) }}/></h1>
-          <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }}/>
+          </Header>
+          <h1><Title value={title} onChange={e => { titleHandle(e) }}/></h1>
+          <Body value={body} onChange={e => { bodyHandle(e) }}/>
           {isAuth() &&
-            <div className={classes.dell}>
-              <span className={"material-icons"} onClick={() => dellAnnouncement()}>delete</span>
-            </div>
+            <Dell>
+              <Icon className={"material-icons"} onClick={() => dellAnnouncement()}>delete</Icon>
+            </Dell>
           }
-        </div>
-      </div>
+        </Container>
+      </EditAnnouncements>
     )
 }
 export default EditAnnouncement

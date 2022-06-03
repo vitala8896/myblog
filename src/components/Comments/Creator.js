@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import classes from './../../Assets/Styles/Comments/Creator.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import { finishCreateComment } from '../../Services/API/create'
 import { createComment } from '../../store/createSlice'
+import { Creator, Input, Add } from '../../Assets/Styles/Comments/Creator'
 
 const CommentCreator = () => {
   const dispatch = useDispatch()
   const [value, setValue] = useState('')
   const { activePost } = useSelector(state => ({
-    activePost: state.post.activePost
+    activePost: state.post.posts.activePost
   }))
   const onChangeHandler = e => {
     setValue(e.target.value)
@@ -24,18 +24,18 @@ const CommentCreator = () => {
   return (
     <>
       {localStorage.getItem('userId') &&
-        <div className={classes.Creator}>
-          <input
+        <Creator>
+          <Input
             value={value}
             placeholder={'Enter your comment'}
             onChange={e => onChangeHandler(e)}
-            className={classes.input} />
-          <span onClick={() => {
+          />
+          <Add onClick={() => {
             dispatch(finishCreateComment(activePost))
             setValue('')
           }
-          } className="material-icons">add</span>
-        </div>
+          } className="material-icons">add</Add>
+        </Creator>
       }
     </>
   )

@@ -1,6 +1,5 @@
 import React from 'react'
-import classes from './../../Assets/Styles/Other/Drawer.module.scss'
-import { NavLink } from 'react-router-dom'
+import { StyleDrawer, List, StyledNavLink } from './../../Assets/Styles/Other/Drawer'
 import { Backdrop } from '../../components/UI/Backdrop/Backdrop'
 
 
@@ -12,25 +11,23 @@ const Drawer = props => {
     return links.map((link, index) => {
       return (
         <div key={index}>
-          <li>
-          <NavLink
+          <StyledNavLink
             to={link.to}
             exact={link.exact}
-            activeClassName={classes.active}
+            activeClassName={StyleDrawer.active}
             onClick={clickHandler}
           >
             {link.label}
-          </NavLink>
-          </li>
+          </StyledNavLink>
           {index % 2? <hr/>:''}
         </div>
       )
     })
   }
-  const cls = [classes.Drawer]
+  const cls = ['Drawer']
   if (!props.isOpen) {
-    cls.push(classes.close)
-  }
+    cls.push('close')
+  }  
   const links = [
     { to: '/', label: 'Posts', exact: true },
     { to: '/announcements', label: 'Announcements', exact: true }
@@ -44,15 +41,14 @@ const Drawer = props => {
     links.push({ to: '/auth', label: 'Authorization', exact: false })
   }
   return (
-    <React.Fragment>  
-      <div className={classes.header}></div>
-      <nav className={cls.join(' ')}>
-        <ul>
+    <div>  
+      <StyleDrawer className={cls.join(' ')}>
+        <List>
           {renderLinks(links)}
-        </ul>
-      </nav>
+        </List>
+      </StyleDrawer>
       {props.isOpen && <Backdrop onClick={props.onClose} />}
-    </React.Fragment>
+    </div>
   )
 }
 

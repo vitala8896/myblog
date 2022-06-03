@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import classes from './../../Assets/Styles/Posts/Edit.module.scss'
-import { NavLink, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { finishDeletePost, finishUpdatePost } from '../../Services/API/create'
-import { setReduxPageNum } from '../../store/pageSlice'
+import { setReduxPageNum } from '../../store/postSlice'
 import { createPost } from '../../store/createSlice'
+import { EditPost, Container, Name, Header, Title, Body, Icon, Dell, StyledNavLink } from '../../Assets/Styles/Posts/Edit'
 
 const Edit = () => {
   const dispatch = useDispatch()  
   let history = useHistory()
-  const { activePostItem } =
+  const { activePostItem, users } =
     useSelector(state => ({
-      activePostItem: state.post.activePostItem,
+      activePostItem: state.post.posts.activePostItem,
+      users: state.user.users
     }))
   const [title, setTitle] = useState(activePostItem.title)
   const [body, setBody] = useState(activePostItem.body)  
@@ -41,31 +42,31 @@ const Edit = () => {
     dispatch(createPost(postItem))
   }
   return (
-    <div className={classes.editPost}>
-      <div className={classes.container}>
-        <div className={classes.header}>
-          <NavLink to={'/'} onClick={() => {
+    <EditPost>
+      <Container>
+        <Header>
+          <StyledNavLink to={'/'} onClick={() => {
             dispatch(setReduxPageNum(1))
-          }} className={classes.link}>
-            <p className={classes.name}>{activePostItem.userId.firstname} {activePostItem.userId.lastname}</p>
-          </NavLink>
+          }}>
+            <Name>{users[activePostItem.userId-1].firstname} {users[activePostItem.userId-1].lastname}</Name>
+          </StyledNavLink>
           {isAuth() &&
-            <span className="material-icons" onClick={() => {
+            <Icon className="material-icons" onClick={() => {
             getItem()
             dispatch(finishUpdatePost(activePostItem.id))
             history.push('/')
-            }}>done_all</span>
+            }}>done_all</Icon>
           }
-        </div>
-        <h1><input value={title} onChange={e => { titleHandle(e) }}/></h1>
-        <textarea className={classes.body} value={body} onChange={e => { bodyHandle(e) }}/>
+        </Header>
+        <h1><Title value={title} onChange={e => { titleHandle(e) }}/></h1>
+        <Body value={body} onChange={e => { bodyHandle(e) }}/>
         {isAuth() &&
-          <div className={classes.dell}>
-            <span className={"material-icons"} onClick={() => isOtherPosts()}>delete</span>
-          </div>
+          <Dell>
+            <Icon className={"material-icons"} onClick={() => isOtherPosts()}>delete</Icon>
+          </Dell>
         }
-      </div>
-    </div>
+      </Container>
+    </EditPost>
   )
 }
 export default Edit

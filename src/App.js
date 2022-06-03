@@ -15,7 +15,7 @@ import PostCreator from './components/Posts/Creator'
 import ActiveAnnouncement from './components/Announcements/Active'
 import AnnouncementCreator from './components/Announcements/Creator'
 import EditAnnouncement from './components/Announcements/Edit'
-import { autoLogin } from './store/authSlice';
+import { autoLogin } from './store/authSlice'
 
 
 const App = () => {
@@ -57,7 +57,7 @@ const App = () => {
       <Layout>
         <Header/>
         {routes}
-      </Layout>
+      </Layout>      
     )
 }
 export default withRouter(App)

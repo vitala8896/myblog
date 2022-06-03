@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import classes from './../../Assets/Styles/Posts/Creator.module.scss'
 import { createControl, validate, validateForm } from '../UI/form/formFramework'
 import { Button } from '../UI/Button/Button'
 import { Input } from '../UI/Input/Input'
@@ -8,6 +7,7 @@ import { Textarea } from '../UI/Textarea/Textarea'
 import { Auxiliary } from '../../Pages/Auxiliary'
 import { finishCreatePost } from '../../Services/API/create'
 import { createPost } from '../../store/createSlice'
+import { Creator, Header, Form } from '../../Assets/Styles/Posts/Creator'
 
 
 const createFormControl = () => {
@@ -103,14 +103,14 @@ const PostCreator = () => {
       })
   }
   return (      
-    <div className={classes.Creator}>
-        <h1>Create a post</h1>
-        <form onSubmit={submitHandler} className={classes.form}>
+    <Creator>
+        <Header>Create a post</Header>
+        <Form onSubmit={submitHandler}>
           {renderControls()}
-          <Button type="success" onClick={createPostHandler
+          <Button success onClick={createPostHandler
           } disabled={!state.isFormValid}>Create a post</Button>
-      </form>
-    </div>
+      </Form>
+    </Creator>
   )
 }
 

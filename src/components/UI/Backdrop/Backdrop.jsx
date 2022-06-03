@@ -1,3 +1,3 @@
-import classes from './../../../Assets/Styles/Other/Backdrop.module.scss'
+import { StyleBackdrop } from '../../../Assets/Styles/Other/Backdrop'
 
-export const Backdrop = props => <div className={classes.Backdrop} onClick={props.onClick} />
+export const Backdrop = props => <StyleBackdrop onClick={props.onClick} /> 
