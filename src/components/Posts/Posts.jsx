@@ -29,7 +29,7 @@ const Posts = () => {
           avatar: '',
           title: item.title,
           body: item.body,
-          create: item.createdAt,
+          create: new Date(item.createdAt).toLocaleDateString()
         }
       })
       dispatch(setReduxPostsList(list))
@@ -55,7 +55,7 @@ const Posts = () => {
                   {item.name} {item.surname}
                 </Name>
               </ImgAndName>
-              <DateItem>{new Date(item.create).toLocaleDateString('')}</DateItem>
+              <DateItem>{item.create}</DateItem>
             </ItemHeader>
             <Title>{item.title}</Title>
             <Body>
