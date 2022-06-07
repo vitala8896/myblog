@@ -6,7 +6,7 @@ export const StyleDrawer = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  max-width: 300px;
+  width: 300px;
   padding: 20px 20px;
   box-sizing: border-box;
   transform: translateX(0px);
@@ -17,6 +17,11 @@ export const StyleDrawer = styled.div`
     transform: translateX(-300px)
   }
 `;
+export const Item = styled.div`
+  :hover {
+    background: #ebf0ff;
+  }
+`;
 export const List = styled.ul`
   list-style: none;
   margin: 0;
@@ -25,17 +30,18 @@ export const List = styled.ul`
 export const StyledNavLink = styled(NavLink)`
   position: relative; 
   color: #363d54;
-  font-size: 30px;
+  font-size: 24px;
   text-decoration: none;
   background: #ebf0ff;
   line-height: 1;
   transition: opacity .3s;
   cursor: pointer;
   margin-bottom: 30px;
+  :hover {
+    opacity: .7;
+  };
   &.active {
     opacity: .7;
   }
-  :hover {
-    opacity: .7;
-  }
+  
 `;

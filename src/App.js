@@ -4,12 +4,12 @@ import { Route, Switch, Redirect, withRouter
 } from 'react-router-dom'
 import './../src/Assets/Styles/App.module.scss'
 import Home from './Pages/Home'
+import HomeAnnouncements from './Pages/HomeAnnouncements'
 import Layout from './Pages/Layout'
 import Logout from './components/Logout/Logout'
 import Header from './Layouts/Header/Header'
 import ActivePost from './components/Posts/Active'
 import Edit from './components/Posts/Edit'
-import Announcements from './components/Announcements/Announcements'
 import Auth from './Pages/Auth'
 import PostCreator from './components/Posts/Creator'
 import ActiveAnnouncement from './components/Announcements/Active'
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/posts/:postId" component={ActivePost} />
         <Route path="/" exact component={Home} />
         <Route path="/announcements/:announcementId" component={ActiveAnnouncement} />
-        <Route path="/announcements" exact component={Announcements} />
+        <Route path="/announcements" exact component={HomeAnnouncements} />
         <Route path="/auth" component={Auth}/>
         <Redirect to="/" />
       </Switch>
@@ -46,17 +46,17 @@ const App = () => {
           <Route path="/announcements/:announcementId/edit" component={EditAnnouncement} />
           <Route path="/posts/:postId" component={ActivePost} />
           <Route path="/announcements/:announcementId" component={ActiveAnnouncement} />
-          <Route path="/announcements" exact component={Announcements} />
+          <Route path="/announcements" exact component={HomeAnnouncements} />
           <Route path="/" exact component={Home} />
           <Route path="/logout" component={Logout} />
           <Redirect to="/" />
         </Switch>
       )
     }
-    return (
-      <Layout>
+    return (      
+      <Layout>       
         <Header/>
-        {routes}
+        {routes}        
       </Layout>      
     )
 }

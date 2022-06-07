@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { StyleLayout, Main } from './../Assets/Styles/Other/Layout' 
+import { StyleLayout, Main } from '../Assets/Styles/Other/Layout' 
 import MenuToggle from './Dashboard/MenuToggle'
 import Drawer from './Dashboard/Drawer'
 

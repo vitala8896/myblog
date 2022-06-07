@@ -14,6 +14,7 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-content: flex-start;
   width: 70%;
   min-height: 100vh;
   padding-bottom: 15px;
@@ -22,7 +23,7 @@ export const Container = styled.div`
   }
 `;
 export const Item = styled.div`
-  display: flex;
+  display: flex;  
   flex-direction: column;
   height: 148px;
   width: 48%;
@@ -66,7 +67,7 @@ export const Body = styled.p`
   color: black; 
   line-height: 1.4;  
 `;
-export const Date = styled.p`
+export const DateItem = styled.p`
   margin: 0;
   color: black; 
   line-height: 1.4; 

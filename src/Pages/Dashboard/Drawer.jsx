@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleDrawer, List, StyledNavLink } from './../../Assets/Styles/Other/Drawer'
+import { StyleDrawer, Item, List, StyledNavLink } from '../../Assets/Styles/Other/Drawer'
 import { Backdrop } from '../../components/UI/Backdrop/Backdrop'
 
 
@@ -10,7 +10,7 @@ const Drawer = props => {
   const renderLinks = links => {
     return links.map((link, index) => {
       return (
-        <div key={index}>
+        <Item key={index}>
           <StyledNavLink
             to={link.to}
             exact={link.exact}
@@ -20,7 +20,7 @@ const Drawer = props => {
             {link.label}
           </StyledNavLink>
           {index % 2? <hr/>:''}
-        </div>
+        </Item>
       )
     })
   }

@@ -1,20 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { StyleHeader, Container, Logo, Avatar, Menu, StyledNavLink } from './../../Assets/Styles/Other/Header'
+import { StyleHeader, Container, Logo, Avatar, Menu, StyledNavLink } from '../../Assets/Styles/Other/Header'
 import logo from './../../Assets/Images/blog-logo.png'
-import { getReduxPosts } from '../../Services/API/post'
-import { setReduxPageNum } from '../../store/postSlice'
+import { setReduxPageNumPosts } from '../../store/postSlice'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const { avatar, token, pageNum, pageSize } = useSelector(state => ({
+  const { avatar, token } = useSelector(state => ({
     avatar: state.post.avatarURL,
-    token: state.auth.token,
-    pageNum: state.post.posts.pageNum,
-    pageSize: state.post.pageSize
+    token: state.auth.token
   }))
   const goToStartPage = () => {
-    dispatch(setReduxPageNum(1))
-    getReduxPosts(pageNum, pageSize)
+    dispatch(setReduxPageNumPosts(1))
   }
   return (
     <StyleHeader>

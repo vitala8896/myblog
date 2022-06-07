@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setReduxPageNum } from '../../store/postSlice'
+import { setReduxPageNumPosts } from '../../store/postSlice'
 import { StylePanel, Container, Pagination, Num } from '../../Assets/Styles/Other/Panel'
 
 const Panel = () => {
   const dispatch = useDispatch()
   const { pageNum, pageCount } = useSelector(state => ({
-    pageNum: state.post.pagination.pageNum,
-    pageCount: state.post.pagination.pageCount
+    pageNum: state.post.pagination.posts.pageNum,
+    pageCount: state.post.pagination.posts.pageCount
   }))  
   return (
     <StylePanel>
@@ -16,7 +16,7 @@ const Panel = () => {
             return <Num className={pageNum === num
               ? 'Num selectedPage'
               : ''} key={num} onClick={() => {
-                dispatch(setReduxPageNum(num))
+                dispatch(setReduxPageNumPosts(num))
               }}>{num}</Num>
           })}
         </Pagination>

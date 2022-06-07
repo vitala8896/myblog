@@ -8,10 +8,9 @@ import { EditAnnouncements, Container, Name, Header, Title, Body, Icon, Dell, St
 const EditAnnouncement = () => {
   const dispatch = useDispatch()
   let history = useHistory()
-  const { activeAnnouncementItem, users } =
+  const { activeAnnouncementItem } =
     useSelector(state => ({
-      activeAnnouncementItem: state.post.announcements.activeAnnouncementItem,
-      users: state.user.users
+      activeAnnouncementItem: state.post.announcements.activeAnnouncementItem
     }))
     const [title, setTitle] = useState(activeAnnouncementItem.title)
     const [body, setBody] = useState(activeAnnouncementItem.body)  
@@ -32,11 +31,12 @@ const EditAnnouncement = () => {
       setBody(val)
     }
     const getItem = () => {
+      const timeToUpdate = 2 * 365 * 3600 * 24 * 1000
       let announcementItem = {
         title, body,
         userId: +localStorage.getItem('userId'),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
+        createdAt: activeAnnouncementItem.createdAt,
+        updatedAt: new Date().toISOString()
       }
       dispatch(createAnnouncement(announcementItem))
     }
@@ -45,7 +45,7 @@ const EditAnnouncement = () => {
         <Container>
           <Header>
             <StyledNavLink to={'/announcements'}>
-              <Name>{users[activeAnnouncementItem.userId-1].firstname} {users[activeAnnouncementItem.userId-1].lastname}</Name>
+              <Name>{activeAnnouncementItem.user.firstname} {activeAnnouncementItem.user.lastname}</Name>
             </StyledNavLink>            
             {isAuth() &&
               <Icon className="material-icons" onClick={() => {

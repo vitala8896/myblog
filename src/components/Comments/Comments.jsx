@@ -2,32 +2,28 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import person from './../../Assets/Images/person.svg'
 import CommentCreator from './Creator'
-import axios from '../../axios/axios-post'
 import { finishDeleteComment } from '../../Services/API/create'
-import { setReduxComments } from '../../store/postSlice'
 import { StyleComments, Item, Img, Avatar, Dell } from '../../Assets/Styles/Comments/Comments'
+import { getReduxComments } from './../../Services/API/post'
 
 const Comments = () => {
   const dispatch = useDispatch()
-  const { comments, activePost, users } = useSelector(state => ({
+  const { comments, activePost } = useSelector(state => ({
     comments: state.post.comments,
-    activePost: state.post.posts.activePost,
-    users: state.user.users
+    activePost: state.post.posts.activePost
   }))
-  useEffect(async () => {
-    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc`).then(response => {
-      dispatch(setReduxComments(response.data))
-    })      
+  useEffect( () => {
+    dispatch(getReduxComments(activePost))     
   }, [activePost])
   const renderActiveComments = () => { 
     return comments.map((item, key) => {      
       return (
         <Item key={key}>
           <Img>
-            <Avatar src={users[item.userId - 1].avatar? users[item.userId - 1].avatar:person} alt='' />
+            <Avatar src={item.user.avatar? item.user.avatar:person} alt='' />
           </Img>          
           <div>
-            {item.userId && users[item.userId - 1].firstname} {item.userId && users[item.userId - 1].lastname} - {item.body}
+            {item.userId && item.user.firstname} {item.userId && item.user.lastname} - {item.body}
           </div>
           {item.userId === +localStorage.getItem('userId') && <Dell className="material-icons" onClick={() => { dispatch(finishDeleteComment(item.id, activePost)) }}>delete</Dell>}
         </Item>

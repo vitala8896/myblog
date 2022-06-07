@@ -73,7 +73,7 @@ export const Img = styled.div`
     height: auto;
   }
 `;
-export const Date = styled.div`
+export const DateItem = styled.div`
   padding-top: 6px;
   font-size: 12px;
   color: black; 

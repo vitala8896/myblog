@@ -1,5 +1,6 @@
-import axios from './../../axios/axios-post'
+import axios from '../axios/axios-post'
 import { authSuccess } from '../../store/authSlice'
+
 
 export const authRegister = (email, password, firstname, lastname, age, avatar) => {
   return async dispatch => {

@@ -12,12 +12,13 @@ const CommentCreator = () => {
   }))
   const onChangeHandler = e => {
     setValue(e.target.value)
+    const timeToUpdate = 2 * 365 * 3600 * 24 * 1000    
     const item = {
       postId: activePost,
       body: e.target.value,
       userId: +localStorage.getItem('userId'),
       createdAt: new Date().toISOString(),
-      updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
+      updatedAt: new Date(new Date().getTime() + timeToUpdate).toISOString()
     }
     dispatch(createComment(item))
   }
@@ -27,7 +28,7 @@ const CommentCreator = () => {
         <Creator>
           <Input
             value={value}
-            placeholder={'Enter your comment'}
+            placeholder='Enter your comment'
             onChange={e => onChangeHandler(e)}
           />
           <Add onClick={() => {

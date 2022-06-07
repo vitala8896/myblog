@@ -1,7 +1,7 @@
-import classes from './Loader.module.scss'
+import { StyleLoader } from './../../../Assets/Styles/Other/Loader'
 
 export const Loader = () => (
-    <div className={classes.Loader}>
+    <StyleLoader>
       <div /><div />
-    </div>
+    </StyleLoader>
 )

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const postSlice = createSlice({
   name: 'post',
   initialState: {
-    posts: {
+     posts: {
       posts: [],
       activePost: 0,
       activePostItem: {},
@@ -13,12 +13,20 @@ export const postSlice = createSlice({
       activeAnnouncement: 0,
       activeAnnouncementItem: {},
     },
-     pagination: {
-      list: [], 
-      pageNum: 1,
-      pageSize: 20,
-      pageCount: [1], 
-     },             
+    pagination: {
+      posts: {
+        list: [], 
+        pageNum: 1,      
+        pageCount: [1],
+        pageSize: 20, 
+      },
+      announcements: {
+        list: [], 
+        pageNum: 1,
+        pageCount: [1],
+        pageSize: 10,
+      } 
+    },             
     comments: [],    
     loading: false,
     error: null,
@@ -33,9 +41,12 @@ export const postSlice = createSlice({
       state.posts.posts = event.payload
       state.loading = false   
     },  
-    setReduxList: (state, event) => {
-      state.pagination.list = event.payload
+    setReduxPostsList: (state, event) => {
+      state.pagination.posts.list = event.payload
     },  
+    setReduxAnnouncementsList: (state, event) => {
+      state.pagination.announcements.list = event.payload
+    },
     setReduxActivePost: (state, event) => {
       state.posts.activePost = event.payload
     },  
@@ -58,15 +69,21 @@ export const postSlice = createSlice({
     resetPostCreation: state => {
       state.post = {}   
     },
-    setReduxPageCount: (state, event) => {
-      state.pagination.pageCount = event.payload;   
+    setReduxPageCountPosts: (state, event) => {
+      state.pagination.posts.pageCount = event.payload;   
     },   
-    setReduxPageNum: (state, event) => {
-      state.pagination.pageNum = event.payload;   
+    setReduxPageCountAnnouncements: (state, event) => {
+      state.pagination.announcements.pageCount = event.payload;   
+    },
+    setReduxPageNumPosts: (state, event) => {
+      state.pagination.posts.pageNum = event.payload;   
+    },
+    setReduxPageNumAnnouncements: (state, event) => {
+      state.pagination.announcements.pageNum = event.payload;   
     },
   },
 })
 
-export const { fetchPostsStart, setReduxPosts, setReduxList, setReduxActivePost, setReduxActivePostItem, setReduxAnnouncements, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem, setReduxComments, resetPostCreation, setReduxPageCount, setReduxPageNum } = postSlice.actions
+export const { fetchPostsStart, setReduxPosts, setReduxPostsList, setReduxAnnouncementsList, setReduxActivePost, setReduxActivePostItem, setReduxAnnouncements, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem, setReduxComments, resetPostCreation, setReduxPageCountPosts, setReduxPageCountAnnouncements, setReduxPageNumPosts, setReduxPageNumAnnouncements } = postSlice.actions
 
 export default postSlice.reducer

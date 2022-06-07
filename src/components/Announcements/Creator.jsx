@@ -36,16 +36,17 @@ const AnnouncementCreator = () => {
   }
   const createAnnouncementHandler = e => {
     e.preventDefault()
+    const timeToUpdate = 2 * 365 * 3600 * 24 * 1000
     const { postName, description } = state.formControls
     const postItem = {
       title: postName.value,
       body: description.value,
       userId: +localStorage.getItem('userId'),
       createdAt: new Date().toISOString(),
-      updatedAt: new Date(new Date().getTime() + (2 * 365 * 3600 * 24 * 1000)).toISOString()
+      updatedAt: new Date(new Date().getTime() + timeToUpdate).toISOString()
     }
     dispatch(createAnnouncement(postItem))
-    setState(prevState => {
+    setState( prevState => {
       return {
         ...prevState, isFormValid: false,
         formControls: createFormControl()

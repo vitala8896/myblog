@@ -1,22 +1,22 @@
-import classes from './Textarea.module.scss'
+import { StyleTextarea } from './../../../Assets/Styles/Other/Textarea'
 
 export const Textarea = props => {
   const isInvalid = ({valid, touched, shouldValidate}) => {
     return !valid && shouldValidate && touched
   }
   const textareaType = props.type || 'text'
-  const cls = [classes.Textarea]
+  const cls = ['Textarea']
   const htmlFor = `${textareaType}-${Math.random()}`
   if (isInvalid(props)) {
-    cls.push(classes.invalid)
+    cls.push('invalid')
   }
  return (
-   <div className={cls.join(' ')}>
+   <StyleTextarea className={cls.join(' ')}>
      <label htmlFor={htmlFor}>{props.label}</label>
      <textarea type={textareaType} id={htmlFor}
        value={props.value} onChange={props.onChange} />
      {isInvalid(props)
        && <span>{props.errorMessage || 'Enter the correct value'}</span>}     
-   </div>
+   </StyleTextarea>
  )
 }
