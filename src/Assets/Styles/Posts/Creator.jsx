@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+
 export const Creator = styled.div`
   display: flex;
   flex-direction: column;

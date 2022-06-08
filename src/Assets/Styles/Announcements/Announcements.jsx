@@ -16,7 +16,7 @@ export const Container = styled.div`
   justify-content: space-evenly;
   align-content: flex-start;
   width: 70%;
-  min-height: 100vh;
+  min-height: 90vh;
   padding-bottom: 15px;
   @media (max-width: 1250px){
     width: 100%

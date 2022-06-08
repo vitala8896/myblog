@@ -1,4 +1,4 @@
-import { StyleTextarea } from './../../../Assets/Styles/Other/Textarea'
+import { StyleTextarea, TextareaSize } from './../../../Assets/Styles/Other/Textarea'
 
 export const Textarea = props => {
   const isInvalid = ({valid, touched, shouldValidate}) => {
@@ -13,7 +13,7 @@ export const Textarea = props => {
  return (
    <StyleTextarea className={cls.join(' ')}>
      <label htmlFor={htmlFor}>{props.label}</label>
-     <textarea type={textareaType} id={htmlFor}
+     <TextareaSize type={textareaType} id={htmlFor}
        value={props.value} onChange={props.onChange} />
      {isInvalid(props)
        && <span>{props.errorMessage || 'Enter the correct value'}</span>}     

@@ -31,7 +31,6 @@ const EditAnnouncement = () => {
       setBody(val)
     }
     const getItem = () => {
-      const timeToUpdate = 2 * 365 * 3600 * 24 * 1000
       let announcementItem = {
         title, body,
         userId: +localStorage.getItem('userId'),

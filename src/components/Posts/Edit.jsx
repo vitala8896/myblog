@@ -6,6 +6,7 @@ import { setReduxPageNumPosts } from '../../store/postSlice'
 import { createPost } from '../../store/createSlice'
 import { EditPost, Container, Name, Header, Title, Body, Icon, Dell, StyledNavLink } from '../../Assets/Styles/Posts/Edit'
 
+
 const Edit = () => {
   const dispatch = useDispatch()  
   let history = useHistory()
@@ -15,9 +16,8 @@ const Edit = () => {
     }))
   const [title, setTitle] = useState(activePostItem.title)
   const [body, setBody] = useState(activePostItem.body)  
-  const isOtherPosts = () => {
-    dispatch(finishDeletePost(activePostItem.id))
-    dispatch(setReduxPageNumPosts(1))
+  const isOtherPosts = async () => {
+    await dispatch(finishDeletePost(activePostItem.id))
     return history.push('/')
   }
   const isAuth = () => {
@@ -31,13 +31,12 @@ const Edit = () => {
     let val = e.target.value
     setBody(val)
   }
-  const getItem = () => {
-    const timeToUpdate = 2 * 365 * 3600 * 24 * 1000  
+  const getItem = () => { 
     let postItem = {
       title, body,
       userId: +localStorage.getItem('userId'),
       createdAt: activePostItem.createdAt,
-      updatedAt: new Date(new Date().getTime() + timeToUpdate).toISOString()
+      updatedAt: new Date().toISOString()
     }
     dispatch(createPost(postItem))
   }
@@ -59,10 +58,10 @@ const Edit = () => {
           }
         </Header>
         <h1><Title value={title} onChange={e => { titleHandle(e) }}/></h1>
-        <Body value={body} onChange={e => { bodyHandle(e) }}/>
+          <Body value={body} onChange={e => { bodyHandle(e) }}/>
         {isAuth() &&
           <Dell>
-            <Icon className={"material-icons"} onClick={() => isOtherPosts()}>delete</Icon>
+            <Icon className="material-icons" onClick={() => isOtherPosts()}>delete</Icon>
           </Dell>
         }
       </Container>

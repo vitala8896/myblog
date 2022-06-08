@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { finishCreateComment } from '../../Services/API/create'
 import { createComment } from '../../store/createSlice'
-import { Creator, Input, Add } from '../../Assets/Styles/Comments/Creator'
+import { Creator, NewComment, Add } from '../../Assets/Styles/Comments/Creator'
 
 const CommentCreator = () => {
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const CommentCreator = () => {
     <>
       {localStorage.getItem('userId') &&
         <Creator>
-          <Input
+          <NewComment
             value={value}
             placeholder='Enter your comment'
             onChange={e => onChangeHandler(e)}

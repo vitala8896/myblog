@@ -2,7 +2,7 @@ import axios from '../axios/axios-post'
 import { setReduxPosts, setReduxActivePost, setReduxActivePostItem, setReduxAnnouncements, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem, setReduxComments, setReduxPageCountAnnouncements } from '../../store/postSlice'
 import { setReduxPageCountPosts } from '../../store/postSlice'
 
-export const getReduxPosts = (pageNum, pageSize) => {  
+export const getReduxPosts = (pageNum = 1, pageSize = 20 ) => {  
   return async dispatch => {
     try {
       await axios.get(`/posts?_sort=createdAt&_order=desc&_expand=user&_page=${pageNum}&_limit=${pageSize}`)

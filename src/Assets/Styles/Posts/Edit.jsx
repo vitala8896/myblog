@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import TextareaAutosize from 'react-textarea-autosize'
 
 
 export const EditPost = styled.div`
@@ -38,7 +39,7 @@ export const Title = styled.input`
   width: 100%;
   padding: 0 15px;
 `;
-export const Body = styled.textarea`
+export const Body = styled(TextareaAutosize)`
   margin: 0;
   background: #7969e6;
   width: 100%;
