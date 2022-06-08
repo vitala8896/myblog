@@ -33,7 +33,8 @@ export const logout = () => {
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: null
+    token: null, 
+    user: {}
   },
   reducers: {
     authSuccess: (state, event) => {
@@ -42,9 +43,16 @@ export const authSlice = createSlice({
     authLogout: state => {
       state.token = null   
     },
+    setReduxUser: (state, event) => {
+      state.user = event.payload;   
+    },
   },
 })
 
-export const { authSuccess, authLogout } = authSlice.actions
+export const { 
+  authSuccess, 
+  authLogout,
+  setReduxUser
+ } = authSlice.actions
 
 export default authSlice.reducer

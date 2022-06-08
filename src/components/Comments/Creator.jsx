@@ -11,14 +11,13 @@ const CommentCreator = () => {
     activePost: state.post.posts.activePost
   }))
   const onChangeHandler = e => {
-    setValue(e.target.value)
-    const timeToUpdate = 2 * 365 * 3600 * 24 * 1000    
+    setValue(e.target.value)   
     const item = {
       postId: activePost,
-      body: e.target.value,
-      userId: +localStorage.getItem('userId'),
+      body: e.target.value,  
+      userId: +localStorage.getItem('userId'),          
       createdAt: new Date().toISOString(),
-      updatedAt: new Date(new Date().getTime() + timeToUpdate).toISOString()
+      updatedAt: new Date().toISOString()
     }
     dispatch(createComment(item))
   }

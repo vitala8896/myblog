@@ -13,6 +13,10 @@ export const postSlice = createSlice({
       activeAnnouncement: 0,
       activeAnnouncementItem: {},
     },
+    comments: {
+      comments: [], 
+      list: []
+    }, 
     pagination: {
       posts: {
         list: [], 
@@ -26,8 +30,7 @@ export const postSlice = createSlice({
         pageCount: [1],
         pageSize: 10,
       } 
-    },             
-    comments: [],    
+    },
     loading: false,
     error: null,
     isFinished: false, 
@@ -47,6 +50,9 @@ export const postSlice = createSlice({
     setReduxAnnouncementsList: (state, event) => {
       state.pagination.announcements.list = event.payload
     },
+    setReduxCommentsList: (state, event) => {
+      state.comments.list = event.payload
+    },
     setReduxActivePost: (state, event) => {
       state.posts.activePost = event.payload
     },  
@@ -64,7 +70,7 @@ export const postSlice = createSlice({
       state.announcements.activeAnnouncementItem = event.payload
     },
     setReduxComments: (state, event) => {
-      state.comments = event.payload  
+      state.comments.comments = event.payload  
     },
     resetPostCreation: state => {
       state.post = {}   
@@ -80,10 +86,24 @@ export const postSlice = createSlice({
     },
     setReduxPageNumAnnouncements: (state, event) => {
       state.pagination.announcements.pageNum = event.payload;   
-    },
+    }
   },
 })
 
-export const { fetchPostsStart, setReduxPosts, setReduxPostsList, setReduxAnnouncementsList, setReduxActivePost, setReduxActivePostItem, setReduxAnnouncements, setReduxActiveAnnouncement, setReduxActiveAnnouncementItem, setReduxComments, resetPostCreation, setReduxPageCountPosts, setReduxPageCountAnnouncements, setReduxPageNumPosts, setReduxPageNumAnnouncements } = postSlice.actions
+export const { 
+  fetchPostsStart, 
+  setReduxPosts, 
+  setReduxPostsList, 
+  setReduxAnnouncementsList, 
+  setReduxCommentsList,
+  setReduxActivePost, 
+  setReduxActivePostItem, 
+  setReduxAnnouncements, 
+  setReduxActiveAnnouncement, setReduxActiveAnnouncementItem, 
+  setReduxComments, 
+  resetPostCreation, 
+  setReduxPageCountPosts, setReduxPageCountAnnouncements, setReduxPageNumPosts, 
+  setReduxPageNumAnnouncements
+} = postSlice.actions
 
 export default postSlice.reducer

@@ -39,7 +39,7 @@ export const getReduxAnnouncements = (pageNum, pageSize) => {
 }
 export const getReduxComments = activePost => {  
   return async dispatch => {
-    await axios.get(`/comments?_sort=createdAt&_order=desc&_expand=user&postId=${activePost}`).then(response => {
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc&_expand=user`).then(response => {
       dispatch(setReduxComments(response.data))
     })
   }    

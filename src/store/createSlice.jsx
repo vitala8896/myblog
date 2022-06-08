@@ -26,15 +26,24 @@ export const create = createSlice({
     resetCommentCreation: state => {
       state.comment = {}   
     },
-    resetAnnouncementDelete: state => {
-      state.announcement = {}   
-    },
     resetCommentDelete: state => {
       state.comment = {}   
     },
+    resetAnnouncementDelete: state => {
+      state.announcement = {}   
+    },    
   },
 })
 
-export const { createPost, createAnnouncement, createComment, resetPostDelete, resetAnnouncementCreation, resetAnnouncementDelete, resetCommentCreation, resetCommentDelete } = create.actions
+export const { 
+  createPost, 
+  createAnnouncement, 
+  createComment, 
+  resetPostDelete, 
+  resetAnnouncementCreation, 
+  resetAnnouncementDelete, 
+  resetCommentCreation, 
+  resetCommentDelete 
+} = create.actions
 
 export default create.reducer

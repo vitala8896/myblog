@@ -1,8 +1,8 @@
 import axios from '../axios/axios-post'
 import { resetCommentCreation, resetCommentDelete } from '../../store/createSlice'
-import { setReduxAnnouncements, setReduxComments, setReduxPosts, resetPostCreation } from '../../store/postSlice'
+import { setReduxAnnouncements, setReduxComments, setReduxPosts, resetPostCreation, resetReduxComments } from '../../store/postSlice'
 import { getReduxPosts, getReduxAnnouncements } from './post'
-import { setReduxPageCountPosts } from '../../store/postSlice'
+import { setReduxPageCountPosts, resetReduxListComments } from '../../store/postSlice'
 import { resetPostDelete, resetAnnouncementCreation } from '../../store/createSlice'
 
 export const finishCreatePost = () => {
@@ -40,15 +40,6 @@ export const finishUpdateAnnouncement = id => {
     }
   }
 }
-export const finishCreateComment = activePost => {
-  return async (dispatch, getState) => {
-    await axios.post('/comments', getState().create.comment)
-    dispatch(resetCommentCreation())
-    await axios.get(`/comments?_sort=createdAt&_order=desc&postId=${activePost}`).then(response => {
-      dispatch(setReduxComments(response.data))
-    })    
-  }
-}
 export const finishDeletePost = (id, pageNum, pageSize) => {
   return async dispatch => {
     await axios.delete('/posts/' + id)
@@ -65,11 +56,19 @@ export const finishDeletePost = (id, pageNum, pageSize) => {
       }) 
   }
 }
+export const finishCreateComment = activePost => {
+  return async (dispatch, getState) => {
+    await axios.post('/comments', getState().create.comment)
+    await dispatch(resetCommentCreation())
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc&_expand=user`).then(response => {
+      dispatch(setReduxComments(response.data))
+    })    
+  }
+}
 export const finishDeleteComment = (id, activePost) => {
   return async dispatch => {
     await axios.delete('/comments/' + id)
-    dispatch(resetCommentDelete())
-    await axios.get(`/comments?_sort=createdAt&_order=desc&postId=${activePost}`).then(response => {
+    await axios.get(`/comments?postId=${activePost}&_sort=createdAt&_order=desc&_expand=user`).then(response => {
       dispatch(setReduxComments(response.data))
     })    
   }

@@ -17,7 +17,7 @@ const ActivePost = () => {
     pageNum: state.post.pagination.posts.pageNum,
     pageSize: state.post.pagination.pageSize
   }))
-  useEffect( async () => {    
+  useEffect( () => {    
     const setURL = () => {
       let numURL = +history.location.pathname.replace('/posts/', '')
       dispatch(setReduxActivePost(numURL))

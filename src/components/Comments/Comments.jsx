@@ -5,34 +5,48 @@ import CommentCreator from './Creator'
 import { finishDeleteComment } from '../../Services/API/create'
 import { StyleComments, Item, Img, Avatar, Dell } from '../../Assets/Styles/Comments/Comments'
 import { getReduxComments } from './../../Services/API/post'
+import { setReduxCommentsList } from '../../store/postSlice'
 
 const Comments = () => {
   const dispatch = useDispatch()
-  const { comments, activePost } = useSelector(state => ({
-    comments: state.post.comments,
+  const { list, comments, activePost } = useSelector(state => ({
+    list: state.post.comments.list,
+    comments: state.post.comments.comments,
     activePost: state.post.posts.activePost
   }))
+  // console.log(list)
   useEffect( () => {
-    dispatch(getReduxComments(activePost))     
+    dispatch(getReduxComments(activePost)) 
   }, [activePost])
+  useEffect(() => {
+      const list = comments.map(item => {
+        return {
+          id: item.id,
+          postId: item.postId,
+          userId: item.userId,
+          user: item.user,
+          body: item.body,
+          create: new Date(item.createdAt).toLocaleDateString()
+        }
+      })
+      dispatch(setReduxCommentsList(list))
+  }, [comments])  
+
   const renderActiveComments = () => { 
-    return comments.map((item, key) => {      
+    return list.map((item, key) => {
       return (
         <Item key={key}>
           <Img>
-            <Avatar src={item.user.avatar? item.user.avatar:person} alt='' />
-          </Img>          
+            <Avatar src={item.user.avatar? item.user.avatar : person} alt='' />
+          </Img>
           <div>
-            {item.userId && item.user.firstname} {item.userId && item.user.lastname} - {item.body}
+            {item.user.firstname} {item.user.lastname} - {item.body} 
           </div>
           {item.userId === +localStorage.getItem('userId') && <Dell className="material-icons" onClick={() => { dispatch(finishDeleteComment(item.id, activePost)) }}>delete</Dell>}
         </Item>
       )
     })
-  }
-  useEffect(() => {
-    renderActiveComments()
-  }, [])
+  } 
   return (
     <StyleComments>
       <CommentCreator />

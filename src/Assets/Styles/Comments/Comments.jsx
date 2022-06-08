@@ -17,13 +17,12 @@ export const Item = styled.div`
   }
 `;
 export const Img = styled.div`
-  width: 50px;  
+  min-width: 50px;  
 `;
 export const Avatar = styled.img`
   width: 40px;
   height: auto;
   border-radius: 50%;
-  margin-right: 5px;
 `;
 export const Dell = styled.span`
   display: none; 
